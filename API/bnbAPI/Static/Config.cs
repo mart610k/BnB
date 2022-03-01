@@ -19,7 +19,7 @@ namespace bnbAPI.Static
 
         public static string GetConnectionString()
         {
-            return "";
+            return string.Format("Server={0},Port={1};Database={2};Uid={3};Pwd={4};",DBHost,DBPort,DBName,DBUser,DBPassword);
         }
 
         public static void ReadConfiguration()
