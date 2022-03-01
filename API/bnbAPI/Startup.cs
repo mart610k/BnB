@@ -15,6 +15,8 @@ namespace bnbAPI
 {
     public class Startup
     {
+        readonly string _POLICY_NAME = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +27,18 @@ namespace bnbAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(_POLICY_NAME,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+
             services.AddControllers();
         }
 
@@ -39,6 +53,8 @@ namespace bnbAPI
             }
 
             app.UseRouting();
+
+            app.UseCors(_POLICY_NAME);
 
             app.UseAuthorization();
 

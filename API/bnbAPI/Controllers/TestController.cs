@@ -36,7 +36,7 @@ namespace bnbAPI.Controllers
 
             conn.Close();
             
-            return Ok(Version);
+            return Ok("{\"version\": \"" + Version + "\"}");
         }
     }
 }
