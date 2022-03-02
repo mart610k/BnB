@@ -1,8 +1,5 @@
 ﻿using bnbAPI.Service;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace bnbAPI.Static
 {
@@ -16,17 +13,30 @@ namespace bnbAPI.Static
         public static string ClientKey { get; private set; }
         public static string ClientSecret { get; private set; }
 
+        public static int WorkFactor { get; private set; }
+
+
 
         public static string GetConnectionString()
         {
-            return string.Format("Server={0},Port={1};Database={2};Uid={3};Pwd={4};",DBHost,DBPort,DBName,DBUser,DBPassword);
+            return string.Format("Server={0},Port={1};Database={2};Uid={3};Pwd={4};", DBHost, DBPort, DBName, DBUser, DBPassword);
         }
 
         public static void ReadConfiguration()
         {
-            ConfigReader reader = new ConfigReader();
 
-            Dictionary<string,string> values = reader.ReadConfigFromFile(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Config.json"));
+            using (System.IO.StreamReader str = new System.IO.StreamReader(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Config.json")))
+            {
+                ReadConfigurationFromJSON(str.ReadToEnd());
+            }
+        }
+  
+        
+        public static void ReadConfigurationFromJSON(string Json)
+        {
+            ConfigReader reader = new ConfigReader();
+            Dictionary<string, string> values = reader.ParseConfigFile(Json);
+
 
             DBHost = values["databaseHost"];
             DBPort = values["databasePort"];
@@ -35,13 +45,10 @@ namespace bnbAPI.Static
             DBPassword = values["databasePassword"];
             ClientKey = values["clientKey"];
             ClientSecret = values["clientSecret"];
+            WorkFactor = int.Parse(values["workFactor"]);
 
 
-
-
-
-
-        }
+        } 
 
     }
 }
