@@ -5,6 +5,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import ListRoomSite from './sites/listRoomSite';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/test" element={<TestSite />} />
+            <Route path="/room" element={<ListRoomSite />} />
           </Routes>
         </Router>
       </header>

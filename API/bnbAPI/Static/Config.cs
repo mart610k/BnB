@@ -36,11 +36,6 @@ namespace bnbAPI.Static
             ClientKey = values["clientKey"];
             ClientSecret = values["clientSecret"];
 
-
-
-
-
-
         }
 
     }
