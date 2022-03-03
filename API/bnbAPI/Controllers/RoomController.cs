@@ -9,7 +9,7 @@ namespace bnbAPI.Controllers
     public class RoomController : ControllerBase
     {
         private RoomLogic logic = new RoomLogic();
-        [HttpGet]
+        [HttpGet("list")]
         public IActionResult GetSimpleRooms()
         {
             return Ok(logic.GetSimpleRoomDTOs());

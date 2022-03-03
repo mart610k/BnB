@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RoomService from '../service/RoomService';
+import '../css/room.css';
 
 
 
@@ -43,10 +44,18 @@ export default class ListRoomSite extends Component {
         return (
             <div>
                 {rooms.map(rooms => (
-                    <div key={rooms.roomID}>
-                        <p>Room Address: {rooms.roomAddress}</p>
-                        <p>Room Owner: {rooms.roomOwner}</p>
-                        <p>Room Status: {rooms.roomStatus}</p>
+                    <div id='Room' key={rooms.roomID}>
+                        <div id="imageBox">
+
+                        </div>
+                        <div id='pBox'>
+                        <p className='roomP'>Address: {rooms.roomAddress}</p>
+                        <p className='roomP'>Owner: {rooms.roomOwner}</p>
+                        <p className='roomP'>Status: {rooms.roomStatus}</p>
+                        </div>
+                        <div id='textBox'>
+                            <p className='roomBriefDesc'>{rooms.roomDesc}</p>
+                        </div>
                     </div>
                 ))}
                 

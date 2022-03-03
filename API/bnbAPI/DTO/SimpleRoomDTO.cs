@@ -11,18 +11,20 @@ namespace bnbAPI.DTO
         public string RoomOwner { get; set; }
         public string RoomStatus { get; set; }
         public int RoomID { get; set; }
+        public string RoomDesc { get; set; }
 
         public SimpleRoomDTO()
         {
 
         }
 
-        public SimpleRoomDTO(int id,string address, string owner, string status)
+        public SimpleRoomDTO(int id,string address, string owner, string status, string desc)
         {
             RoomID = id;
             RoomAddress = address;
             RoomOwner = owner;
             RoomStatus = status;
+            RoomDesc = desc;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "Select RoomID, RoomAddress, RoomOwner, StatusName from room inner join status_room on room.RoomID = status_room.FK_RoomID join status on FK_StatusID = status.StatusID;";
+            comm.CommandText = "Select RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription from room inner join status_room on room.RoomID = status_room.FK_RoomID join status on FK_StatusID = status.StatusID;";
 
             conn.Open();
 
@@ -30,7 +30,7 @@ namespace bnbAPI.Service
 
             while(reader.Read())
             {
-                rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"),reader.GetString("RoomAddress"),reader.GetString("RoomOwner"),reader.GetString("StatusName")));
+                rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"),reader.GetString("RoomAddress"),reader.GetString("RoomOwner"),reader.GetString("StatusName"),reader.GetString("RoomBriefDescription")));
             }
             return rooms;
         }

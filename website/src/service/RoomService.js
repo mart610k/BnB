@@ -1,7 +1,7 @@
 export default class RoomService{
 
     async RetrieveSimpleRooms() {
-        let result = await fetch("http://localhost:65273/api/Room");
+        let result = await fetch("http://localhost:65273/api/Room/list");
 
         let responseOK = result && result.ok;
 
