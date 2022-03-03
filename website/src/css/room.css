@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#Room {
+    float: left;
+    width: 70vw;
+    height:15vh;
+    margin: 0.5% 15vw 0.5% 15vw;
+    display: block;
+    background-color: grey;
+}
+
+.roomP:first-child {
+    float: left;
+    height: 100%;
+    margin-left: 4%;
+    max-width: 80%;
+    font-size: 13pt;
+    display: block;
+}
+
+.roomP:nth-child(2) {
+    float: left;
+    height: 100%;
+    margin-left: 16%;
+    max-width: 80%;
+    font-size: 13pt;
+    display: block;
+}
+
+.roomP:nth-child(3) {
+    float: right;
+    height: 100%;
+    margin-right: 6%;
+    max-width: 80%;
+    font-size: 13pt;
+    display: block;
+}
+
+#pBox {
+    float: left;
+    display: block;
+    width: 75%;
+    margin: 1% 0 0 0;
+    text-align: center;
+    border-bottom: 1px black solid;
+    border-right: 1px black solid;
+}
+
+
+#imageBox {
+    float: left;
+    height:80%;
+    width: 8%;
+    display: block;
+    margin: 1%;
+    background-color: white;
+}
+
+#textBox {
+    float: left;
+    width:75%;
+    border-bottom: 1px black solid;
+    border-right: 1px black solid;
+    margin-top: 1%;
+    text-align: left;
+    height: 55%;
+}
+
+.roomBriefDesc {
+    float: left;
+    margin: 0% 1% 0 1%;
+    font-size: 16pt;
+}
