@@ -22,7 +22,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "Select RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription from room inner join status_room on room.RoomID = status_room.FK_RoomID join status on FK_StatusID = status.StatusID;";
+            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID;";
 
             conn.Open();
 
