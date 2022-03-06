@@ -13,8 +13,8 @@ namespace bnbAPI.Controllers
         [HttpPost("register")]
         public IActionResult RegisterUser([FromBody] RegisterUserDTO registerUser)
         {
-            return Ok(userLogic.RegisterUser(registerUser));
+            MessageDTO message = userLogic.RegisterUser(registerUser);
+            return StatusCode(message.StatusCode,message);
         }
-
     }
 }

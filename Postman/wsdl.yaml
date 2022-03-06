@@ -42,4 +42,10 @@ paths:
                   type: string
         responses:
           "200":
-            description:  User have been successfully registered
+            description: User have been successfully registered.
+          "400":
+            description: Call did not validate with Email format.
+          "409":
+            description: There was a conflict with the data on database.
+          "500":
+            description: Unspecifed error happened.

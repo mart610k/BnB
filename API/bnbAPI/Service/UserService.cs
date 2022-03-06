@@ -11,7 +11,7 @@ namespace bnbAPI.Service
     {
         PasswordHashService passwordHashService = new PasswordHashService();
 
-        public bool RegisterUser(RegisterUserDTO registerUser)
+        public void RegisterUser(RegisterUserDTO registerUser)
         {
             try
             {
@@ -33,11 +33,10 @@ namespace bnbAPI.Service
                     comm.Parameters.AddWithValue("@email", registerUser.Email);
                     comm.Parameters.AddWithValue("@name", registerUser.Name);
                     comm.ExecuteNonQuery();
-                    comm.CommandText = "INSERT INTO UserCredentials(UserEmail,Password) VALUE (@email,@password);";
+                    comm.CommandText = "INSERT INTO UserCredential(UserEmail,Password) VALUE (@email,@password);";
                     comm.Parameters.AddWithValue("@password", hashedPassword);
                     comm.ExecuteNonQuery();
                     trans.Commit();
-
                 }
                 catch(Exception e)
                 {
@@ -48,22 +47,20 @@ namespace bnbAPI.Service
                         {
                             conn.Close();
                         }
-                        return false;
-
+                        throw e;
                     }
                     catch
                     {
-                        return false;
+                        throw e;
                     }
                 }
 
                 conn.Close();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return false;
+                throw e;
             }
-            return true;
         }
     }
 }
