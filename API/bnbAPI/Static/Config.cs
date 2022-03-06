@@ -46,9 +46,6 @@ namespace bnbAPI.Static
             ClientKey = values["clientKey"];
             ClientSecret = values["clientSecret"];
             WorkFactor = int.Parse(values["workFactor"]);
-
-
-        } 
-
+        }
     }
 }
