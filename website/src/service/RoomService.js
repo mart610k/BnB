@@ -19,7 +19,7 @@ export default class RoomService{
     }
 
     async RetrieveDetailedRoom(id){
-        let result = await fetch("http://localhost:65273/api/Room/room?id="+id);
+        let result = await fetch(this.environmentService.getEnvironmentHost() + "/api/Room/room?id="+id);
         console.log(result);
         let responseOK = result && result.ok;
 
