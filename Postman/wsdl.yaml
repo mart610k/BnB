@@ -1,0 +1,51 @@
+swagger: "2.0"
+info:
+  title: BNB Swagger Documentation
+  description: API description in Markdown.
+  version: 1.0.0
+host: bnb.baage-it.dk
+basePath: /api
+schemes:
+  - https
+paths:
+  "/test":
+    get:
+      summary: "Testing endpoint for checking connection"
+      responses:
+        "200":
+          description: "successfull reuslt"
+          schema:
+            type: object
+            properties:
+              version: 
+                type: string 
+            example:
+              version: "8.0.28"
+  "/user/register":
+      post:
+        summary: "Allows a user to register themselves"
+        parameters:
+          - in: body
+            name: body
+            schema:
+              type: object
+              required:
+                - Email
+                - Name
+                - Password
+              properties:
+                Email:
+                  type: string
+                Name: 
+                  type: string
+                Password: 
+                  type: string
+        responses:
+          "200":
+            description: User have been successfully registered.
+          "400":
+            description: Call did not validate with Email format.
+          "409":
+            description: There was a conflict with the data on database.
+          "500":
+            description: Unspecifed error happened.

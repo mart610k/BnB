@@ -1,14 +1,19 @@
 import EnvironmentService from "./environmentService";
 
-
 export default class TestService{
-
+    
     constructor(){
         this.environmentService = new EnvironmentService();
     }
 
-    async retrieveTestAPI(){
-        let result = await fetch(this.environmentService.getEnvironmentHost() + "/test");
+    async registerUser(data = {}){
+        let result = await fetch(this.environmentService.getEnvironmentHost() + "/api/user/register",{
+            method: "POST",
+            headers: {
+                'Content-Type': 'Application/JSON'
+            },
+            body: JSON.stringify(data)
+        });
 
         let responseOK = result && result.ok;
 
