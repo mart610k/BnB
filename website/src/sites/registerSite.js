@@ -90,9 +90,6 @@ class RegisterSite extends Component {
         this.setState({
             passwordVerified: result
         }) 
-
-        
-
     }
 
     handleChange(event){
@@ -123,7 +120,7 @@ class RegisterSite extends Component {
     render()
     {
         return (
-            <div>
+            <div id="registerUser">
                 <form onSubmit={this.onSubmit}>
                     <h1>Register</h1>
 
@@ -136,14 +133,8 @@ class RegisterSite extends Component {
                     <label htmlFor="passwordInput" >Password:</label><br/>
                     <input type={this.state.showpass ? "text" : "password"} className="InputField" name="passwordInput" value={this.state.passwordInput} onChange={this.handleChange} placeholder="Password" required />
 
-                    <input className="showpass" name="showpass" type="checkbox" checked={this.state.showpass} onChange={this.handleCheckboxChange}/>
-                    {/* 
-                    <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
-                    <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i>
-                    
-                    
-                    */}
-                    
+                    <input className="showpass" name="showpass" type="checkbox" checked={this.state.showpass} onChange={this.handleCheckboxChange}/> Show password
+
                     <br/>
                     
                     <label htmlFor="passwordRepeatedInput">Password Repeated:</label><br/>

@@ -10,6 +10,7 @@
     margin: 5px 0 10px 0;
     border: none;
     background: #f1f1f1;
+    border: 1px solid black;
 }
 
 .SubmitButton
@@ -21,7 +22,13 @@
     
 }
 
-.passwordEye{
-    margin-left: -30px;
-    cursor: pointer;
+#registerUser{
+    width: 50%;
+    align-self: center;
 }
+
+#PaswordInput{
+    float: left;
+    width: 97%;
+}
+

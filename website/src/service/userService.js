@@ -1,7 +1,13 @@
+import EnvironmentService from "./environmentService";
+
 export default class TestService{
     
+    constructor(){
+        this.environmentService = new EnvironmentService();
+    }
+
     async registerUser(data = {}){
-        let result = await fetch("http://localhost:65273/api/user/register",{
+        let result = await fetch(this.environmentService.getEnvironmentHost() + "/api/user/register",{
             method: "POST",
             headers: {
                 'Content-Type': 'Application/JSON'

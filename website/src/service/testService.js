@@ -1,7 +1,14 @@
+import EnvironmentService from "./environmentService";
+
+
 export default class TestService{
-    
+
+    constructor(){
+        this.environmentService = new EnvironmentService();
+    }
+
     async retrieveTestAPI(){
-        let result = await fetch("http://localhost:65273/test");
+        let result = await fetch(this.environmentService.getEnvironmentHost() + "/test");
 
         let responseOK = result && result.ok;
 
