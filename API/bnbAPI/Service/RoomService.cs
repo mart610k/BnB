@@ -14,7 +14,10 @@ namespace bnbAPI.Service
         {
 
         }
-
+        /// <summary>
+        /// Get's a list of rooms in simple details
+        /// </summary>
+        /// <returns></returns>
         public List<SimpleRoomDTO> GetSimpleRooms()
         {
             List<SimpleRoomDTO> rooms = new List<SimpleRoomDTO>();
@@ -28,11 +31,34 @@ namespace bnbAPI.Service
 
             MySqlDataReader reader = comm.ExecuteReader();
 
-            while(reader.Read())
+            while (reader.Read())
             {
-                rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"),reader.GetString("RoomAddress"),reader.GetString("RoomOwner"),reader.GetString("StatusName"),reader.GetString("RoomBriefDescription")));
+                rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"), reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetString("StatusName"), reader.GetString("RoomBriefDescription")));
             }
+            conn.Close();
             return rooms;
+        }
+
+        public DetailedRoomDTO GetDetailedRoom(int id)
+        {
+            DetailedRoomDTO detailedRoom = null;
+            MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+            MySqlCommand comm = conn.CreateCommand();
+
+            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, RoomDescription, StatusName FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID WHERE RoomID = @id";
+            comm.Parameters.AddWithValue("@id", id);
+
+            conn.Open();
+
+            MySqlDataReader reader = comm.ExecuteReader();
+
+            while (reader.Read())
+            {
+                detailedRoom = new DetailedRoomDTO(reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetInt32("RoomID"), reader.GetString("RoomDescription"), reader.GetString("StatusName"));
+            }
+            conn.Close();
+            return detailedRoom;
         }
     }
 }

@@ -12,7 +12,12 @@ namespace bnbAPI.Controllers
         [HttpGet("list")]
         public IActionResult GetSimpleRooms()
         {
-            return Ok(logic.GetSimpleRoomDTOs());
+            return Ok(logic.GetSimpleRooms());
+        }
+        [HttpGet("room")]
+        public IActionResult GetDetailedRoom([FromQuery] int id)
+        {
+            return Ok(logic.GetDetailedRoom(id));
         }
     }
 }
