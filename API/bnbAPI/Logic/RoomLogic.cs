@@ -10,6 +10,8 @@ namespace bnbAPI.Logic
     public class RoomLogic
     {
         private RoomService roomService = new RoomService();
+        private FacilityService facilityService = new FacilityService();
+        private PictureService pictureService = new PictureService();
         public RoomLogic()
         {
 
@@ -19,9 +21,17 @@ namespace bnbAPI.Logic
         /// Proxy between Service and API
         /// </summary>
         /// <returns></returns>
-        public List<SimpleRoomDTO> GetSimpleRoomDTOs()
+        public List<SimpleRoomDTO> GetSimpleRooms()
         {
             return roomService.GetSimpleRooms();
+        }
+
+        public DetailedRoomDTO GetDetailedRoom(int id)
+        {
+            DetailedRoomDTO detailedRoom = roomService.GetDetailedRoom(id);
+            detailedRoom.RoomFacilities = facilityService.GetFacilities(id);
+            detailedRoom.RoomPictures = pictureService.GetPictureList(id);
+            return detailedRoom;
         }
     }
 }

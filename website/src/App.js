@@ -3,9 +3,11 @@ import TestSite from "./sites/testSite.js";
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  useParams
 } from "react-router-dom";
 import ListRoomSite from './sites/listRoomSite';
+import DetailedRoomSite from './sites/detailedRoomSite';
 
 function App() {
   return (
@@ -17,11 +19,13 @@ function App() {
       <Router>
           <Routes>
             <Route path="/test" element={<TestSite />} />
-            <Route path="/room" element={<ListRoomSite />} />
+            <Route exact path="/" element={<ListRoomSite />} />
+            <Route exact path="/room/:RoomID" element={<DetailedRoomSite />} />
           </Routes>
         </Router>
       </section>
     </div>
+    
   );
 }
 

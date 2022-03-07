@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import RoomService from '../service/RoomService';
+import RoomService from '../service/roomService';
 import '../css/room.css';
-
-
 
 export default class ListRoomSite extends Component {
 
@@ -12,7 +10,7 @@ export default class ListRoomSite extends Component {
 
         this.state = {
             rooms : []
-        }
+        }   
     }
 
     async getSimpleRooms(){
@@ -28,23 +26,22 @@ export default class ListRoomSite extends Component {
         }
 
     }
-    
 
     componentDidMount(){
         this.getSimpleRooms();
     }
-
+ 
 
     render()
     {
         const rooms = this.state.rooms;
         if(rooms.length === 0) return null;
         if(!rooms) return null;
-        console.log(rooms);
         return (
             <div>
                 {rooms.map(rooms => (
-                    <div id='Room' key={rooms.roomID}>
+                    
+                    <div id='Room' onClick={() => (window.location.href="/room/" + rooms.roomID)} key={rooms.roomID}>
                         <div id="imageBox">
 
                         </div>
@@ -56,7 +53,12 @@ export default class ListRoomSite extends Component {
                         <div id='textBox'>
                             <p className='roomBriefDesc'>{rooms.roomDesc}</p>
                         </div>
+                        <div id="Facilities">
+                            
+                        </div>
                     </div>
+                    
+                    
                 ))}
                 
             </div>
