@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
 using System.Text.Json;
 
 namespace bnbAPI.Service
 {
     public class ConfigReader
     {
-        private string[] expectedKeys = new string[]{
+        private readonly string[] expectedKeys = new string[]{
             "databaseName",
             "databasePort",
             "databaseHost",
             "databaseUser",
             "databasePassword",
             "clientSecret",
-            "clientKey"
+            "clientKey",
+            "workFactor"
             };
 
         public Dictionary<string,string> ParseConfigFile(string jsonData)
@@ -47,12 +44,6 @@ namespace bnbAPI.Service
             return keyValuePairs;
         }
 
-        public Dictionary<string, string> ReadConfigFromFile(string filePath)
-        {
-            using (System.IO.StreamReader str = new System.IO.StreamReader(filePath))
-            {
-                return ParseConfigFile(str.ReadToEnd());
-            }
-        }
+        
     }
 }

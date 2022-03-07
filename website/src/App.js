@@ -1,11 +1,15 @@
 import './App.css';
 import TestSite from "./sites/testSite.js";
+import RegisterSite from "./sites/registerSite.js";
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  useNavigate
 } from "react-router-dom";
 import ListRoomSite from './sites/listRoomSite';
+
+//import { useNavigate } from "react-router-dom";
 
 function App() {
   return (
@@ -17,6 +21,7 @@ function App() {
       <Router>
           <Routes>
             <Route path="/test" element={<TestSite />} />
+            <Route path="/register" element={<RegisterSite />} />
             <Route path="/room" element={<ListRoomSite />} />
           </Routes>
         </Router>

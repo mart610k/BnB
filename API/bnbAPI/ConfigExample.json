@@ -1,9 +1,10 @@
 {
-    "databaseHost" : "expectedDBHost",
-    "databasePort" :  "expectedDBPort",
-    "databaseName" : "expectedDBname",
-    "databaseUser" : "expectedDBUser",
-    "databasePassword" : "expectedDBPassword",
-    "clientKey" : "expectedClientKey",
-    "clientSecret" : "expectedClientSecret" 
+  "databaseHost": "expectedDBHost",
+  "databasePort": "expectedDBPort",
+  "databaseName": "expectedDBname",
+  "databaseUser": "expectedDBUser",
+  "databasePassword": "expectedDBPassword",
+  "clientKey": "expectedClientKey",
+  "clientSecret": "expectedClientSecret",
+  "workFactor": "12"
 }
