@@ -48,7 +48,7 @@ namespace bnbAPI.Logic
             }
             else
             {
-                messageDTO = new MessageDTO("Email address did not forfill email format", HttpStatusCodeService.GetHttpStatusIntFromEnum(HttpStatusEnum.ClientFormatError));
+                messageDTO = new MessageDTO("Email address did not fulfill email format", HttpStatusCodeService.GetHttpStatusIntFromEnum(HttpStatusEnum.ClientFormatError));
             }
 
             return messageDTO;
