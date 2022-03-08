@@ -11,6 +11,58 @@ namespace bnbAPI.Service
     {
         PasswordHashService passwordHashService = new PasswordHashService();
 
+
+        public UserCredentialsDTO GetUserCredentials(string userID)
+        {
+            UserCredentialsDTO userCredentials = null;
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+                conn.Open();
+
+                MySqlTransaction trans = conn.BeginTransaction();
+
+                try
+                {
+                    MySqlCommand comm = conn.CreateCommand();
+                    comm.Connection = conn;
+                    comm.Transaction = trans;
+
+                    comm.CommandText = "SELECT UserName,Password FROM UserCredential WHERE UserName = @userName;";
+                    comm.Parameters.AddWithValue("@userName", userID);
+                    MySqlDataReader reader = comm.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        userCredentials = new UserCredentialsDTO(reader.GetString("UserName"), reader.GetString("Password"));
+                    }
+                }
+                catch (Exception e)
+                {
+                    try
+                    {
+                        if (conn.State == System.Data.ConnectionState.Open)
+                        {
+                            conn.Close();
+                        }
+                        throw e;
+                    }
+                    catch
+                    {
+                        throw e;
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        return userCredentials;
+        }
+
+
         public void RegisterUser(RegisterUserDTO registerUser)
         {
             try
