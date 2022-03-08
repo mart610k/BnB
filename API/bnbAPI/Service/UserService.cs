@@ -81,11 +81,12 @@ namespace bnbAPI.Service
                     comm.Connection = conn;
                     comm.Transaction = trans;
 
-                    comm.CommandText = "INSERT INTO UserInformation(Email,Name) VALUE (@email,@name);";
+                    comm.CommandText = "INSERT INTO UserInformation(Username,Email,Name) VALUE (@username,@email,@name);";
+                    comm.Parameters.AddWithValue("@username", registerUser.Username);
                     comm.Parameters.AddWithValue("@email", registerUser.Email);
                     comm.Parameters.AddWithValue("@name", registerUser.Name);
                     comm.ExecuteNonQuery();
-                    comm.CommandText = "INSERT INTO UserCredential(UserEmail,Password) VALUE (@email,@password);";
+                    comm.CommandText = "INSERT INTO UserCredential(Username,Password) VALUE (@username,@password);";
                     comm.Parameters.AddWithValue("@password", hashedPassword);
                     comm.ExecuteNonQuery();
                     trans.Commit();

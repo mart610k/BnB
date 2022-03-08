@@ -27,6 +27,7 @@ class RegisterSite extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
+            usernameInput : "",
             emailInput : "",
             nameInput : "",
             passwordInput : "",
@@ -49,6 +50,7 @@ class RegisterSite extends Component {
 
 
            let result = await this.userService.registerUser({
+               Username: this.state.usernameInput,
                Email: this.state.emailInput,
                Name: this.state.nameInput,
                Password: this.state.passwordInput
@@ -124,11 +126,14 @@ class RegisterSite extends Component {
                 <form onSubmit={this.onSubmit}>
                     <h1>Register</h1>
 
+                    <label htmlFor='usernameInput'>Username:</label><br/>
+                    <input className='InputField' type="text" name='usernameInput' value={this.state.usernameInput} onChange={this.handleChange} placeholder="Username" required/> <br/>
+
                     <label htmlFor="emailInput">Email:</label><br/>
-                    <input className="InputField" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="text" name="emailInput" value={this.state.emailInput} onChange={this.handleChange} placeholder="joe@email.com" required/> <br/>
+                    <input className="InputField" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="text" name="emailInput" value={this.state.emailInput} onChange={this.handleChange} placeholder="Email" required/> <br/>
                     
                     <label htmlFor="nameInput">Name:</label><br/>
-                    <input type="text" className="InputField" name="nameInput" value={this.state.nameInput} onChange={this.handleChange} placeholder="joe" required/> <br/>
+                    <input type="text" className="InputField" name="nameInput" value={this.state.nameInput} onChange={this.handleChange} placeholder="Name" required/> <br/>
 
                     <label htmlFor="passwordInput" >Password:</label><br/>
                     <input type={this.state.showpass ? "text" : "password"} className="InputField" name="passwordInput" value={this.state.passwordInput} onChange={this.handleChange} placeholder="Password" required />
