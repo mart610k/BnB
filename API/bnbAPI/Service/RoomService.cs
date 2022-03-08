@@ -25,7 +25,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID;";
+            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room JOIN StatusRoom ON room.RoomID = StatusRoom.FK_RoomID JOIN status ON FK_StatusID = status.StatusID;";
 
             conn.Open();
 
@@ -46,7 +46,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, RoomDescription, StatusName FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID WHERE RoomID = @id";
+            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, RoomDescription, StatusName FROM room JOIN StatusRoom ON room.RoomID = StatusRoom.FK_RoomID JOIN status ON FK_StatusID = status.StatusID WHERE RoomID = @id";
             comm.Parameters.AddWithValue("@id", id);
 
             conn.Open();

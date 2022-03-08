@@ -13,7 +13,8 @@ namespace bnbAPI.Service
             "databasePassword",
             "clientSecret",
             "clientKey",
-            "workFactor"
+            "workFactor",
+            "accessTokenValidity"
             };
 
         public Dictionary<string,string> ParseConfigFile(string jsonData)

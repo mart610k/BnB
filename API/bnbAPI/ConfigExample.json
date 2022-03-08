@@ -6,5 +6,6 @@
   "databasePassword": "expectedDBPassword",
   "clientKey": "expectedClientKey",
   "clientSecret": "expectedClientSecret",
-  "workFactor": "12"
+  "workFactor": "12",
+  "accessTokenValidity": "3600"
 }

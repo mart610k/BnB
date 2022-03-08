@@ -1,8 +1,7 @@
-USE BNB;
-
-CREATE TABLE Oauth2(
-    `UserId` VARCHAR(128) PRIMARY KEY,
+CREATE TABLE `Oauth2`(
+    `UserName` VARCHAR(128) PRIMARY KEY,
     `AccessToken` BINARY(16) unique,
     `RefreshToken` BINARY(16) unique,
-    FOREIGN KEY(`UserId`) REFERENCES UserInformation(`Email`)
+    `Expires` Timestamp,
+    FOREIGN KEY(`UserName`) REFERENCES UserInformation(`Username`)
 );

@@ -14,6 +14,7 @@ namespace bnbAPI.Static
         public static string ClientSecret { get; private set; }
 
         public static int WorkFactor { get; private set; }
+        public static int AccessTokenValidity { get; private set; }
 
 
 
@@ -46,6 +47,7 @@ namespace bnbAPI.Static
             ClientKey = values["clientKey"];
             ClientSecret = values["clientSecret"];
             WorkFactor = int.Parse(values["workFactor"]);
+            AccessTokenValidity = int.Parse(values["accessTokenValidity"]);
         }
     }
 }

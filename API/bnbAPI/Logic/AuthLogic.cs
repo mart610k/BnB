@@ -16,6 +16,7 @@ namespace bnbAPI.Logic
     {
         UserService userService = new UserService();
         PasswordHashService passwordHashService = new PasswordHashService();
+        AuthService authService = new AuthService();
 
 
         public AccessTokenDTO getAccessToken(string authorization, Dictionary<string, string> keyValuePairs)
@@ -32,26 +33,37 @@ namespace bnbAPI.Logic
             {
                 UserCredentialsDTO credentials = userService.GetUserCredentials(keyValuePairs["username"]);
 
-                //if(credentials == null)
-                //{
-                //    throw new Exception();
-                //}
+                if (credentials == null)
+                {
+                    throw new Exception();
+                }
 
-                //if(passwordHashService.Verify(keyValuePairs["password"], credentials.PasswordHashed))
-                //{
+                if (passwordHashService.Verify(keyValuePairs["password"], credentials.PasswordHashed))
+                {
                     AccessTokenDTO accessToken = new AccessTokenDTO();
+                    try
+                    {
+                        AccessTokenDTO token = authService.GetAccessTokenByUserID(keyValuePairs["username"]);
+                        if(token.Expires_in < 200)
+                        {
+                            authService.UpdateAccessTokenForUser(keyValuePairs["username"]);
 
-                    accessToken.Access_token = Guid.NewGuid().ToString();
-                    accessToken.Refresh_token = Guid.NewGuid().ToString();
-                    accessToken.Token_type = "Bearer";
-                    accessToken.Expires_in = 3600;
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        authService.RegisterAccessToken(keyValuePairs["username"]);
+
+                    }
+                    accessToken = authService.GetAccessTokenByUserID(keyValuePairs["username"]);
 
                     return accessToken;
-                //}
-                //else
-                //{
-                //    throw new Exception();
-                //}
+                }
+                else
+                {
+                    throw new Exception();
+                }
 
             }
             else
