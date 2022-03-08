@@ -1,3 +1,5 @@
+USE BNB;
+
 CREATE TABLE `Oauth2`(
     `UserName` VARCHAR(128) PRIMARY KEY,
     `AccessToken` BINARY(16) unique,
