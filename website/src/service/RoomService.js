@@ -21,7 +21,6 @@ export default class RoomService{
     async RetrieveDetailedRoom(id){
         let result = await fetch(this.environmentService.getEnvironmentHost() + "/api/Room/room?id="+id);
         let responseOK = result && result.ok;
-
         if(responseOK){
             let data = await result.json();
             return data;

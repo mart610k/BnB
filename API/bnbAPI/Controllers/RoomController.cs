@@ -20,7 +20,7 @@ namespace bnbAPI.Controllers
             return Ok(logic.GetDetailedRoom(id));
         }
         [HttpGet("search")]
-        public IActionResult GetRoomBySearch([FromQuery] string param)
+        public IActionResult GetRoomBySearch([FromQuery] int param)
         {
             return Ok(logic.GetRoomsBySearch(param));
         }

@@ -40,15 +40,15 @@ namespace bnbAPI.Service
             return rooms;
         }
 
-        public List<SimpleRoomDTO> GetRoomsBySearch(string search)
+        public List<SimpleRoomDTO> GetRoomsBySearch(int id)
         {
             List<SimpleRoomDTO> rooms = new List<SimpleRoomDTO>();
             MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID WHERE RoomDescription LIKE @string;";
-            comm.Parameters.AddWithValue("@string","%"+search+"%");
+            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID WHERE RoomID LIKE @id;";
+            comm.Parameters.AddWithValue("@id",id);
 
             conn.Open();
 

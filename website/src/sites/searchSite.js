@@ -17,13 +17,15 @@ export default class SearchSite extends Component{
             this.state = {
                 searchParam : '',
                 rooms : [],
-                facilities : []
+                facilities : [],
+                selectedFacilities : []
             }
         }
 
 
-        async GetsRoomBySearch(){   
-            let result = await this.roomService.RetrieveRoomSearch(this.state.searchParam);
+        async GetsRoomBySearch(string){   
+            console.log(string);
+            let result = await this.roomService.RetrieveRoomSearch(string);
             if(result.status === 401){
                 
             }
@@ -31,6 +33,7 @@ export default class SearchSite extends Component{
                 this.setState({
                     rooms : result
                 })
+                console.log(this.state.rooms);
             }
         }
 
@@ -46,14 +49,21 @@ export default class SearchSite extends Component{
             }
         }
 
-        handleChange(event){
+        handleChange = (e) => {
+            const value = e.target.value;
+            const checkedFacilities = this.state.selectedFacilities;
+            if (!checkedFacilities.includes(value)) {
+                checkedFacilities.push(value);
+            } else {
+                checkedFacilities.splice(checkedFacilities.indexOf(value),1);
+            }
             this.setState({
-                [event.target.name] : event.target.value
-            });
+                checkedFacilities : checkedFacilities
+            })
+            // console.log(this.state.checkedFacilities);
         }
 
         componentDidMount(){
-            this.GetsRoomBySearch()
             this.GetAllFacilities()
         }
     
@@ -61,21 +71,21 @@ export default class SearchSite extends Component{
             const facilities = this.state.facilities;
             if(facilities.length === 0) return null;
             if(!facilities) return null;
-
+            const checked = this.state.selectedFacilities;
             return (
                 <div id="searchBox">
                     <h2>Facilities</h2>
                     <div id="facilityBox">
                         {facilities.map(facility => (
-                            <div id='checkBox'>
-                                <label id='facilityLabel' htmlFor='facility'>{facility.facilityName}</label>
-                                <input id='facility' type={'checkbox'}></input> 
+                            <div key={facility.facilityID} id='checkBox'>
+                                <label id='facilityLabel' htmlFor='facilityName'>{facility.facilityName}</label>
+                                <input id='facility' onChange={this.handleChange} name="facilityName" value={facility.facilityID} type={'checkbox'}></input> 
                             </div>
                         ))}
                     </div>
                     <div id="inputBox">
                         {/* <input id='searchInput' onChange={this.handleChange} name="searchParam" value={this.state.searchParam} type="text" placeholder='Søg'></input> */}
-                        <button id='simpleSearch' onClick={() => this.GetsRoomBySearch()}>Søg</button>
+                        <button id='simpleSearch' onClick={() => this.GetsRoomBySearch(checked)}>Søg</button>
                     </div>
                 </div>
             )
