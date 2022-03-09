@@ -13,10 +13,10 @@ namespace bnbAPI.DTO
         public int RoomID { get; set; }
         public string RoomDesc { get; set; }
         public List<string> RoomPictures { get; set; }
-        public List<string> RoomFacilities { get; set; }
+        public List<FacilityDTO> RoomFacilities { get; set; }
         public string RoomStatus { get; set; }
 
-        public DetailedRoomDTO(string address, string owner, int id, string desc, List<string> pictures, List<string> facilities, string status)
+        public DetailedRoomDTO(string address, string owner, int id, string desc, List<string> pictures, List<FacilityDTO> facilities, string status)
         {
             RoomAddress = address;
             RoomDesc = desc;

@@ -20,7 +20,6 @@ export default class RoomService{
 
     async RetrieveDetailedRoom(id){
         let result = await fetch(this.environmentService.getEnvironmentHost() + "/api/Room/room?id="+id);
-        console.log(result);
         let responseOK = result && result.ok;
 
         if(responseOK){
@@ -30,4 +29,17 @@ export default class RoomService{
             return result;
         }
     }
+
+    async RetrieveRoomSearch(string){
+        let result = await fetch(this.environmentService.getEnvironmentHost() + "/api/Room/search?param="+string);
+        let responseOK = result && result.ok;
+        if(responseOK){
+            let data = await result.json();
+            return data;
+        } else {
+            return result;
+        }
+    }
+
+    
 }

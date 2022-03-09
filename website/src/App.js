@@ -1,6 +1,3 @@
-import './App.css';
-import TestSite from "./sites/testSite.js";
-import RegisterSite from "./sites/registerSite.js";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,30 +5,35 @@ import {
   useParams,
   useNavigate
 } from "react-router-dom";
+import React, { useState } from "react";
+import './App.css';
 import ListRoomSite from './sites/listRoomSite';
 import DetailedRoomSite from './sites/detailedRoomSite';
-
-//import { useNavigate } from "react-router-dom";
+import TestSite from "./sites/testSite.js";
+import RegisterSite from "./sites/registerSite.js";
+import HeaderSite from "./sites/headerSite";
+import SearchSite from "./sites/searchSite";
 
 function App() {
+  
+
+  
   return (
     <div className="App">
-      <header className="App-header">
-        
-      </header>
+      <HeaderSite />
       <section className='App-section'>
+
       <Router>
           <Routes>
             <Route path="/test" element={<TestSite />} />
             <Route exact path="/" element={<ListRoomSite />} />
             <Route exact path="/room/:RoomID" element={<DetailedRoomSite />} />
             <Route path="/register" element={<RegisterSite />} />
-            <Route path="/room" element={<ListRoomSite />} />
+            <Route path="/search" element={<SearchSite />} />
           </Routes>
         </Router>
       </section>
     </div>
-    
   );
 }
 

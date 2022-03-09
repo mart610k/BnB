@@ -19,7 +19,6 @@ export default class ListRoomSite extends Component {
             
         }
         else {
-            console.log(result);
             this.setState({
                 rooms : result
             })

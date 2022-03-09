@@ -26,6 +26,11 @@ namespace bnbAPI.Logic
             return roomService.GetSimpleRooms();
         }
 
+        public List<SimpleRoomDTO> GetRoomsBySearch(string search)
+        {
+            return roomService.GetRoomsBySearch(search);
+        }
+
         public DetailedRoomDTO GetDetailedRoom(int id)
         {
             DetailedRoomDTO detailedRoom = roomService.GetDetailedRoom(id);
