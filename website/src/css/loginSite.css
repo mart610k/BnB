@@ -7,27 +7,25 @@
     width: 100%;
     padding-top: 10px;
     padding-bottom: 10px;
-    margin: 5px 0 10px 0;
-    border: none;
+    padding-right: -2px;
+    /* margin: 5px 0 10px 0; */
     background: #f1f1f1;
     border: 1px solid black;
+    content: center;    
 }
 
 .SubmitButton
 {
     width: 100%;
     height: 40px;
-    background-color: #a01111;
-    border: none;
+    background-color: #ddd;
+    border: black 1px solid;
+    color: white;
+    font-size: x-large;    
+    margin-left: 1px;
 }
 
-#registerUser{
+#loginUser{
     width: 50%;
     align-self: center;
 }
-
-#PaswordInput{
-    float: left;
-    width: 97%;
-}
-
