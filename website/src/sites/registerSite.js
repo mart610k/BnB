@@ -150,7 +150,7 @@ class RegisterSite extends Component {
 
                     <button className="SubmitButton" type="submit" >Register</button>
 
-                    <label><Link to="/login">Already got an account sign in here</Link></label><br/>
+                    <label><Link to="/login">Already got an account? sign in here</Link></label><br/>
 
                 </form>
             </div>
