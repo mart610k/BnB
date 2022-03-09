@@ -2,9 +2,6 @@
 using bnbAPI.Static;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace bnbAPI.Service
 {
@@ -106,6 +103,66 @@ namespace bnbAPI.Service
             }
         }
 
+        public string GetUserIDByAccessToken(string accesstoken)
+        {
+            string userID = null;
+
+
+            MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+            MySqlCommand comm = conn.CreateCommand();
+
+            comm.CommandText = "SELECT UserName FROM Oauth2 WHERE AccessToken = UUID_TO_BIN(@accesstoken)";
+            comm.Parameters.AddWithValue("@accesstoken", accesstoken);
+
+            conn.Open();
+
+            MySqlDataReader reader = comm.ExecuteReader();
+
+            while (reader.Read())
+            {
+                userID = reader.GetString("UserName");
+            }
+            reader.Close();
+            conn.Close();
+
+            if (userID == null)
+            {
+                throw new Exception();
+            }
+            return userID;
+        }
+
+        public string GetUserIDByRefreshToken(string refreshToken)
+        {
+            string userID = null;
+
+
+            MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+            MySqlCommand comm = conn.CreateCommand();
+
+            comm.CommandText = "SELECT UserName FROM Oauth2 WHERE RefreshToken = UUID_TO_BIN(@refreshToken)";
+            comm.Parameters.AddWithValue("@refreshToken", refreshToken);
+
+            conn.Open();
+
+            MySqlDataReader reader = comm.ExecuteReader();
+
+            while (reader.Read())
+            {
+                userID = reader.GetString("UserName");
+            }
+            reader.Close();
+            conn.Close();
+
+            if (userID == null)
+            {
+                throw new Exception();
+            }
+            return userID;
+        }
+
         public AccessTokenDTO GetAccessTokenByUserID(string userID)
         {
             AccessTokenDTO accessTokenDTO = null;
@@ -131,13 +188,73 @@ namespace bnbAPI.Service
                 accessTokenDTO.Token_type = "bearer";
 
             }
+            reader.Close();
             conn.Close();
 
-            if(accessTokenDTO == null)
+            if (accessTokenDTO == null)
             {
                 throw new Exception();
             }
             return accessTokenDTO;
+        }
+
+        public AccessTokenDTO GetAccessTokenByAccessToken(string accessToken)
+        {
+            AccessTokenDTO accessTokenDTO = null;
+
+            MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+            MySqlCommand comm = conn.CreateCommand();
+
+            comm.CommandText = "SELECT BIN_TO_UUID(AccessToken),BIN_TO_UUID(RefreshToken),TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(), Expires) as ExpiresIn FROM Oauth2 WHERE AccessToken = UUID_TO_BIN(@accesstoken)";
+            comm.Parameters.AddWithValue("@accesstoken", accessToken);
+
+            conn.Open();
+
+            MySqlDataReader reader = comm.ExecuteReader();
+
+            while (reader.Read())
+            {
+                accessTokenDTO = new AccessTokenDTO();
+
+                accessTokenDTO.Access_token = reader.GetString("BIN_TO_UUID(AccessToken)");
+                accessTokenDTO.Refresh_token = reader.GetString("BIN_TO_UUID(RefreshToken)");
+                accessTokenDTO.Expires_in = reader.GetInt32("ExpiresIn");
+                accessTokenDTO.Token_type = "bearer";
+
+            }
+            reader.Close();
+            conn.Close();
+
+            if (accessTokenDTO == null)
+            {
+                throw new Exception();
+            }
+            return accessTokenDTO;
+        }
+
+        public void DeleteAccessTokenEntryByUserID(string userID)
+        {
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+                MySqlCommand comm = conn.CreateCommand();
+
+                comm.CommandText = "DELETE FROM Oauth2 WHERE UserName = @UserName";
+                comm.Parameters.AddWithValue("@UserName", userID);
+
+                conn.Open();
+
+                comm.ExecuteNonQuery();
+
+                conn.Close();
+
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
     }

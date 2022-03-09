@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 
 namespace bnbAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class TestController : ControllerBase
     {

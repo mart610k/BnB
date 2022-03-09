@@ -1,13 +1,9 @@
 ﻿using bnbAPI.DTO;
 using bnbAPI.Service;
 using bnbAPI.Static;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace bnbAPI.Logic
 {
@@ -19,44 +15,34 @@ namespace bnbAPI.Logic
         AuthService authService = new AuthService();
 
 
-        public AccessTokenDTO getAccessToken(string authorization, Dictionary<string, string> keyValuePairs)
+        public AccessTokenDTO getAccessToken(AccessTokenAuthorizationDTO accessTokenAuthorizationDTO)
         {
-
-            string authBase64 = authorization.Substring(6);
-
-
-            string clientKeySecret = Encoding.UTF8.GetString(Convert.FromBase64String(authBase64));
-
-            string[] array = clientKeySecret.Split(':');
-
-            if (Config.ClientKey == array[0] && Config.ClientSecret == array[1])
+            if (Config.ClientKey == accessTokenAuthorizationDTO.ClientKey && Config.ClientSecret == accessTokenAuthorizationDTO.ClientSecret)
             {
-                UserCredentialsDTO credentials = userService.GetUserCredentials(keyValuePairs["username"]);
+                UserCredentialsDTO credentials = userService.GetUserCredentials(accessTokenAuthorizationDTO.Username);
 
                 if (credentials == null)
                 {
                     throw new Exception();
                 }
 
-                if (passwordHashService.Verify(keyValuePairs["password"], credentials.PasswordHashed))
+                if (passwordHashService.Verify(accessTokenAuthorizationDTO.Password, credentials.PasswordHashed))
                 {
-                    AccessTokenDTO accessToken = new AccessTokenDTO();
                     try
                     {
-                        AccessTokenDTO token = authService.GetAccessTokenByUserID(keyValuePairs["username"]);
+                        AccessTokenDTO token = authService.GetAccessTokenByUserID(accessTokenAuthorizationDTO.Username);
                         if(token.Expires_in < 200)
                         {
-                            authService.UpdateAccessTokenForUser(keyValuePairs["username"]);
-
+                            authService.UpdateAccessTokenForUser(accessTokenAuthorizationDTO.Username);
                         }
 
                     }
                     catch (Exception e)
                     {
-                        authService.RegisterAccessToken(keyValuePairs["username"]);
+                        authService.RegisterAccessToken(accessTokenAuthorizationDTO.Username);
 
                     }
-                    accessToken = authService.GetAccessTokenByUserID(keyValuePairs["username"]);
+                    AccessTokenDTO accessToken = authService.GetAccessTokenByUserID(accessTokenAuthorizationDTO.Username);
 
                     return accessToken;
                 }
@@ -75,5 +61,35 @@ namespace bnbAPI.Logic
         
         }
 
+        public AccessTokenDTO UpdateAccessToken(UpdateAccessTokenDTO updateAccessTokenDTO)
+        {
+            if (Config.ClientKey == updateAccessTokenDTO.ClientKey && Config.ClientSecret == updateAccessTokenDTO.ClientSecret)
+            {
+                string userID = authService.GetUserIDByRefreshToken(updateAccessTokenDTO.RefreshToken);
+
+
+                authService.UpdateAccessTokenForUser(userID);
+
+                return authService.GetAccessTokenByUserID(userID);
+
+            }
+
+            throw new Exception();
+        }
+
+        public bool LogoutUser(string accessToken)
+        {
+            try
+            {
+                string accessTokenDTO = authService.GetUserIDByAccessToken(accessToken);
+
+                authService.DeleteAccessTokenEntryByUserID(accessTokenDTO);
+                return true;
+            }
+        catch(Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

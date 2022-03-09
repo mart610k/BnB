@@ -36,6 +36,7 @@ namespace bnbAPI.Service
                     {
                         userCredentials = new UserCredentialsDTO(reader.GetString("UserName"), reader.GetString("Password"));
                     }
+                    reader.Close();
                 }
                 catch (Exception e)
                 {

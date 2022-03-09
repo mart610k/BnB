@@ -35,6 +35,7 @@ namespace bnbAPI.Service
             {
                 rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"), reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetString("StatusName"), reader.GetString("RoomBriefDescription")));
             }
+            reader.Close();
             conn.Close();
             return rooms;
         }
@@ -57,6 +58,7 @@ namespace bnbAPI.Service
             {
                 detailedRoom = new DetailedRoomDTO(reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetInt32("RoomID"), reader.GetString("RoomDescription"), reader.GetString("StatusName"));
             }
+            reader.Close();
             conn.Close();
             return detailedRoom;
         }
