@@ -62,7 +62,7 @@ class DetailedRoomSite extends Component {
                     <div id='detailedpBox'>
                     <p className='detailedroomP'>Address: {room.roomAddress}</p>
                     <p className='detailedroomP'>Owner: {room.roomOwner}</p>
-                    <p className='detailedroomP'>Status: {room.roomStatus}</p>
+                    <p className='detailedroomP'>Status: {room.booked ? "Booked": "Available"}</p>
                     </div>
                     <div id='detailedtextBox'>
                         <p className='roomDesc'>{room.roomDesc}</p>
