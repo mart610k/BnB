@@ -21,7 +21,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT FileName FROM picture JOIN room ON room.RoomID = picture.FK_RoomID where RoomID = @id;";
+            comm.CommandText = "SELECT filename FROM picture JOIN room ON room.roomid = picture.fk_roomid where roomid = @id;";
             comm.Parameters.AddWithValue("@id", id);
 
             conn.Open();

@@ -29,12 +29,12 @@ namespace bnbAPI.Service
                     comm.Connection = conn;
                     comm.Transaction = trans;
 
-                    comm.CommandText = "SELECT UserName,Password FROM UserCredential WHERE UserName = @userName;";
+                    comm.CommandText = "SELECT username,password FROM usercredential WHERE username = @userName;";
                     comm.Parameters.AddWithValue("@userName", userID);
                     MySqlDataReader reader = comm.ExecuteReader();
                     while (reader.Read())
                     {
-                        userCredentials = new UserCredentialsDTO(reader.GetString("UserName"), reader.GetString("Password"));
+                        userCredentials = new UserCredentialsDTO(reader.GetString("username"), reader.GetString("password"));
                     }
                     reader.Close();
                 }
@@ -82,12 +82,12 @@ namespace bnbAPI.Service
                     comm.Connection = conn;
                     comm.Transaction = trans;
 
-                    comm.CommandText = "INSERT INTO UserInformation(Username,Email,Name) VALUE (@username,@email,@name);";
+                    comm.CommandText = "INSERT INTO userinformation(username,email,name) VALUE (@username,@email,@name);";
                     comm.Parameters.AddWithValue("@username", registerUser.Username);
                     comm.Parameters.AddWithValue("@email", registerUser.Email);
                     comm.Parameters.AddWithValue("@name", registerUser.Name);
                     comm.ExecuteNonQuery();
-                    comm.CommandText = "INSERT INTO UserCredential(Username,Password) VALUE (@username,@password);";
+                    comm.CommandText = "INSERT INTO usercredential(username,password) VALUE (@username,@password);";
                     comm.Parameters.AddWithValue("@password", hashedPassword);
                     comm.ExecuteNonQuery();
                     trans.Commit();

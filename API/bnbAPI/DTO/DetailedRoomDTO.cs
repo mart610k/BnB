@@ -44,7 +44,7 @@ namespace bnbAPI.DTO
             Price = price;
         }
 
-        public DetailedRoomDTO(string address, string owner, int id, string desc, List<string> pictures, List<string> facilities, bool booked, int price) : this(address,owner,id,desc,booked,price)
+        public DetailedRoomDTO(string address, string owner, int id, string desc, List<string> pictures, List<FacilityDTO> facilities, bool booked, int price) : this(address,owner,id,desc,booked,price)
         {
             RoomFacilities = facilities;
             RoomPictures = pictures;

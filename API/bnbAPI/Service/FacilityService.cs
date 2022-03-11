@@ -74,7 +74,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT * FROM facility";
+            comm.CommandText = "SELECT facilityid,facilityname FROM facility";
 
             conn.Open();
 
@@ -82,7 +82,7 @@ namespace bnbAPI.Service
 
             while (reader.Read())
             {
-                facility.Add(new FacilityDTO(reader.GetInt32("FacilityID"), reader.GetString("FacilityName")));
+                facility.Add(new FacilityDTO(reader.GetInt32("facilityid"),reader.GetString("facilityname")));
             }
             reader.Close();
             conn.Close();
@@ -95,7 +95,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
             comm.Parameters.AddWithValue("@roomID", roomID);
-            comm.CommandText = "INSERT INTO Facility_Room(FK_RoomID,FK_FacilityID) VALUE(@roomID, @facilityID);";
+            comm.CommandText = "INSERT INTO facility_room(fk_roomid,fk_facilityid) VALUE(@roomID, @facilityID);";
             conn.Open();
 
             for (int i = 0; i < facilities.Count; i++)
