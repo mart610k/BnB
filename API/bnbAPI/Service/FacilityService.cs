@@ -47,23 +47,22 @@ namespace bnbAPI.Service
         public List<FacilityDTO> GetFacilities(int id)
         {
             List<FacilityDTO> facility = new List<FacilityDTO>();
-            MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
 
-            MySqlCommand comm = conn.CreateCommand();
-
-            comm.CommandText = "SELECT FacilityID, FacilityName FROM facility JOIN facility_room ON facility.FacilityID = facility_room.FK_FacilityID JOIN room ON FK_RoomID = room.RoomID where RoomID = @id;";
-            comm.Parameters.AddWithValue("@id", id);
-
-            conn.Open();
-
-            MySqlDataReader reader = comm.ExecuteReader();
-
-            while (reader.Read())
+            using (MySqlConnection conn = new MySqlConnection(Config.GetConnectionString()))
             {
-                facility.Add(new FacilityDTO(reader.GetInt32("FacilityID"), reader.GetString("FacilityName")));
+                MySqlCommand comm = conn.CreateCommand();
+                comm.CommandText = "SELECT FacilityID, FacilityName FROM facility JOIN facility_room ON facility.FacilityID = facility_room.FK_FacilityID JOIN room ON FK_RoomID = room.RoomID where RoomID = @id;";
+                comm.Parameters.AddWithValue("@id", id);
+
+                conn.Open();
+
+                MySqlDataReader reader = comm.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    facility.Add(new FacilityDTO(reader.GetInt32("FacilityID"), reader.GetString("FacilityName")));
+                }
             }
-            reader.Close();
-            conn.Close();
             return facility;
         }
 

@@ -41,7 +41,6 @@ class HeaderSite extends Component{
         }
 
         componentDidMount(){
-            this.GetsRoomBySearch()
         }
     
         render() {

@@ -71,7 +71,7 @@ class DetailedRoomSite extends Component {
                     <div id='detailedfacilities'>
                         <p id="facTitle">Facilities</p>
                         {facilities.map(facility => (
-                            <p className='detailedfacilityP'>{facility}</p>
+                            <p className='detailedfacilityP'>{facility.facilityName}</p>
                         ))}
                     </div>
                     <div id='smallImageBox'>
