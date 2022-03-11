@@ -16,9 +16,9 @@ namespace bnbAPI.Service
 
         }
 
-        public List<string> GetFacilities(int id)
+        public List<FacilityDTO> GetFacilities(int id)
         {
-            List<string> facility = new List<string>();
+            List<FacilityDTO> facility = new List<FacilityDTO>();
             try
             {
 
@@ -26,7 +26,7 @@ namespace bnbAPI.Service
 
                 MySqlCommand comm = conn.CreateCommand();
 
-                comm.CommandText = "SELECT FacilityName FROM facilities JOIN facility_room ON facilities.FacilityID = facility_room.FK_FacilityID JOIN room ON FK_RoomID = room.RoomID where RoomID = @id;";
+                comm.CommandText = "SELECT facilityid,facilityname FROM facility JOIN facility_room ON facility.facilityid = facility_room.fk_facilityid JOIN room ON fk_roomid = room.roomid where roomid = @id;";
                 comm.Parameters.AddWithValue("@id", id);
 
                 conn.Open();
@@ -35,7 +35,7 @@ namespace bnbAPI.Service
 
                 while (reader.Read())
                 {
-                    facility.Add(reader.GetString("FacilityName"));
+                    facility.Add(new FacilityDTO(reader.GetInt32("facilityid"),reader.GetString("facilityname")));
                 }
 
                 reader.Close();
@@ -59,7 +59,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT FacilityID,FacilityName FROM facilities";
+            comm.CommandText = "SELECT facilityid,facilityname FROM facility";
 
             conn.Open();
 
@@ -67,7 +67,7 @@ namespace bnbAPI.Service
 
             while (reader.Read())
             {
-                facility.Add(new FacilityDTO(reader.GetInt32("FacilityID"),reader.GetString("FacilityName")));
+                facility.Add(new FacilityDTO(reader.GetInt32("facilityid"),reader.GetString("facilityname")));
             }
             reader.Close();
             conn.Close();
@@ -80,7 +80,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
             comm.Parameters.AddWithValue("@roomID", roomID);
-            comm.CommandText = "INSERT INTO Facility_Room(FK_RoomID,FK_FacilityID) VALUE(@roomID, @facilityID);";
+            comm.CommandText = "INSERT INTO facility_room(fk_roomid,fk_facilityid) VALUE(@roomID, @facilityID);";
             conn.Open();
 
             for (int i = 0; i < facilities.Count; i++)

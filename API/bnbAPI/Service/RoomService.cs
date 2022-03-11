@@ -25,7 +25,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT room.roomID as RoomID,roomAddress,RoomOwner,RoomBriefDescription,Price,if(rent.RoomID IS NULL,false,True) as booked FROM room LEFT JOIN `Rent` ON room.RoomID = Rent.RoomID AND CURDATE() BETWEEN `From` AND `To`;";
+            comm.CommandText = "SELECT roomid,address,owner,briefdescription,price,if(rent.fk_roomid IS NULL,false,True) as booked FROM room LEFT JOIN `rent` ON room.roomid = Rent.fk_roomid AND CURDATE() BETWEEN `from` AND `to`;";
 
             conn.Open();
 
@@ -33,7 +33,7 @@ namespace bnbAPI.Service
 
             while (reader.Read())
             {
-                rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"), reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetBoolean("Booked"), reader.GetString("RoomBriefDescription"), reader.GetInt32("Price")));
+                rooms.Add(new SimpleRoomDTO(reader.GetInt32("roomid"), reader.GetString("address"), reader.GetString("owner"), reader.GetBoolean("booked"), reader.GetString("briefdescription"), reader.GetInt32("price")));
             }
             reader.Close();
             conn.Close();
@@ -54,7 +54,7 @@ namespace bnbAPI.Service
                 {
                     MySqlCommand comm = conn.CreateCommand();
 
-                    comm.CommandText = "INSERT INTO Room(RoomOwner,RoomAddress,RoomDescription,RoomBriefDescription,Price) VALUE (@username,@address,@description,@briefDescription,@price); SELECT @@IDENTITY;";
+                    comm.CommandText = "INSERT INTO Room(owner,address,dDescription,briefdescription,price) VALUE (@username,@address,@description,@briefDescription,@price); SELECT @@IDENTITY;";
                     comm.Parameters.AddWithValue("@username", userID);
                     comm.Parameters.AddWithValue("@address", roomDTO.Address);
                     comm.Parameters.AddWithValue("@description", roomDTO.Description);
@@ -101,7 +101,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT Room.RoomID as RoomID, RoomAddress, RoomOwner, RoomDescription,Price, if(rent.RoomID IS NULL,false,True) as Booked FROM room LEFT JOIN `Rent` ON room.RoomID = Rent.RoomID AND CURDATE() BETWEEN `From` AND `To` WHERE Room.RoomID = @id";
+            comm.CommandText = "SELECT roomid, address, owner, description,price, if(rent.RoomID IS NULL,false,True) as booked FROM room LEFT JOIN `rent` ON room.roomid = Rent.fk_roomid AND CURDATE() BETWEEN `from` AND `to` WHERE roomid = @id";
             comm.Parameters.AddWithValue("@id", id);
 
             conn.Open();
@@ -110,7 +110,7 @@ namespace bnbAPI.Service
 
             while (reader.Read())
             {
-                detailedRoom = new DetailedRoomDTO(reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetInt32("RoomID"), reader.GetString("RoomDescription"),reader.GetBoolean("Booked"), reader.GetInt32("Price"));
+                detailedRoom = new DetailedRoomDTO(reader.GetString("address"), reader.GetString("owner"), reader.GetInt32("roomid"), reader.GetString("description"),reader.GetBoolean("booked"), reader.GetInt32("price"));
             }
             reader.Close();
             conn.Close();

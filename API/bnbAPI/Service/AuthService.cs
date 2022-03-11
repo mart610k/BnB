@@ -20,13 +20,13 @@ namespace bnbAPI.Service
                 {
                     MySqlCommand comm = conn.CreateCommand();
 
-                    comm.CommandText = "INSERT INTO Oauth2(Username,AccessToken,RefreshToken,Expires) VALUE (@username,UUID_TO_BIN(@accessToken),UUID_TO_BIN(@refreshToken),@expiry);";
+                    comm.CommandText = "INSERT INTO oauth2(username,accesstoken,refreshtoken,expires) VALUE (@username,UUID_TO_BIN(@accessToken),UUID_TO_BIN(@refreshToken),@expiry);";
                     comm.Parameters.AddWithValue("@username", userid);
                     comm.Parameters.AddWithValue("@accessToken", Guid.NewGuid().ToString());
                     comm.Parameters.AddWithValue("@refreshToken", Guid.NewGuid().ToString());
 
                     DateTime dateTime = DateTime.UtcNow;
-                    dateTime.AddSeconds(Config.AccessTokenValidity);
+                    dateTime = dateTime.AddSeconds(Config.AccessTokenValidity);
 
                     comm.Parameters.AddWithValue("@expiry", dateTime);
                     
@@ -68,7 +68,7 @@ namespace bnbAPI.Service
                 {
                     MySqlCommand comm = conn.CreateCommand();
 
-                    comm.CommandText = "UPDATE Oauth2 SET AccessToken = UUID_TO_BIN(@accessToken),Expires = @expiry WHERE UserName = @username;";
+                    comm.CommandText = "UPDATE oauth2 SET accesstoken = UUID_TO_BIN(@accessToken),expires = @expiry WHERE username = @username;";
                     comm.Parameters.AddWithValue("@username", userID);
                     comm.Parameters.AddWithValue("@accessToken", Guid.NewGuid().ToString());
 
@@ -117,7 +117,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT UserName FROM Oauth2 WHERE AccessToken = UUID_TO_BIN(@accesstoken) AND UTC_TIMESTAMP() < EXPIRES;";
+            comm.CommandText = "SELECT username FROM oauth2 WHERE accesstoken = UUID_TO_BIN(@accesstoken) AND UTC_TIMESTAMP() < expires;";
             comm.Parameters.AddWithValue("@accesstoken", accesstoken);
 
             conn.Open();
@@ -126,7 +126,7 @@ namespace bnbAPI.Service
 
             while (reader.Read())
             {
-                userID = reader.GetString("UserName");
+                userID = reader.GetString("username");
             }
             reader.Close();
             conn.Close();
@@ -147,7 +147,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT UserName FROM Oauth2 WHERE RefreshToken = UUID_TO_BIN(@refreshToken)";
+            comm.CommandText = "SELECT username FROM oauth2 WHERE refreshtoken = UUID_TO_BIN(@refreshToken)";
             comm.Parameters.AddWithValue("@refreshToken", refreshToken);
 
             conn.Open();
@@ -156,7 +156,7 @@ namespace bnbAPI.Service
 
             while (reader.Read())
             {
-                userID = reader.GetString("UserName");
+                userID = reader.GetString("username");
             }
             reader.Close();
             conn.Close();
@@ -176,7 +176,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT BIN_TO_UUID(AccessToken),BIN_TO_UUID(RefreshToken),TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(), Expires) as ExpiresIn FROM Oauth2 WHERE UserName = @userID";
+            comm.CommandText = "SELECT BIN_TO_UUID(accesstoken),BIN_TO_UUID(refreshtoken),TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(), expires) as expiresin FROM oauth2 WHERE username = @userID";
             comm.Parameters.AddWithValue("@userID", userID);
 
             conn.Open();
@@ -187,9 +187,9 @@ namespace bnbAPI.Service
             {
                 accessTokenDTO = new AccessTokenDTO();
 
-                accessTokenDTO.Access_token =  reader.GetString("BIN_TO_UUID(AccessToken)");
-                accessTokenDTO.Refresh_token= reader.GetString("BIN_TO_UUID(RefreshToken)");
-                accessTokenDTO.Expires_in = reader.GetInt32("ExpiresIn");
+                accessTokenDTO.Access_token =  reader.GetString("BIN_TO_UUID(accesstoken)");
+                accessTokenDTO.Refresh_token= reader.GetString("BIN_TO_UUID(refreshtoken)");
+                accessTokenDTO.Expires_in = reader.GetInt32("expiresin");
                 accessTokenDTO.Token_type = "bearer";
 
             }
@@ -211,7 +211,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT BIN_TO_UUID(AccessToken),BIN_TO_UUID(RefreshToken),TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(), Expires) as ExpiresIn FROM Oauth2 WHERE AccessToken = UUID_TO_BIN(@accesstoken)";
+            comm.CommandText = "SELECT BIN_TO_UUID(accesstoken),BIN_TO_UUID(refreshtoken),TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(), expires) as expiresin FROM oauth2 WHERE accesstoken = UUID_TO_BIN(@accesstoken)";
             comm.Parameters.AddWithValue("@accesstoken", accessToken);
 
             conn.Open();
@@ -222,9 +222,9 @@ namespace bnbAPI.Service
             {
                 accessTokenDTO = new AccessTokenDTO();
 
-                accessTokenDTO.Access_token = reader.GetString("BIN_TO_UUID(AccessToken)");
-                accessTokenDTO.Refresh_token = reader.GetString("BIN_TO_UUID(RefreshToken)");
-                accessTokenDTO.Expires_in = reader.GetInt32("ExpiresIn");
+                accessTokenDTO.Access_token = reader.GetString("BIN_TO_UUID(accesstoken)");
+                accessTokenDTO.Refresh_token = reader.GetString("BIN_TO_UUID(refreshtoken)");
+                accessTokenDTO.Expires_in = reader.GetInt32("expiresin");
                 accessTokenDTO.Token_type = "bearer";
 
             }
@@ -246,7 +246,7 @@ namespace bnbAPI.Service
 
                 MySqlCommand comm = conn.CreateCommand();
 
-                comm.CommandText = "DELETE FROM Oauth2 WHERE UserName = @UserName";
+                comm.CommandText = "DELETE FROM oauth2 WHERE username = @UserName";
                 comm.Parameters.AddWithValue("@UserName", userID);
 
                 conn.Open();

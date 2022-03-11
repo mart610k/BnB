@@ -1,9 +1,9 @@
 USE bnb;
 
 CREATE TABLE `picture` (
-  `FileName` binary(16) NOT NULL,
+  `filename` binary(16) NOT NULL,
   `fk_roomid` int NOT NULL,
-  PRIMARY KEY (`FileName`),
+  PRIMARY KEY (`filename`),
   FOREIGN KEY (`fk_roomid`) REFERENCES `room` (`roomid`)
 );
 
