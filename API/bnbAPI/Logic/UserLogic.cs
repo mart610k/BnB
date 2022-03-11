@@ -26,14 +26,14 @@ namespace bnbAPI.Logic
                 try
                 {
                     userService.RegisterUser(registerUser);
-                    messageDTO = new MessageDTO(string.Format("The user \"{0}\" was registered", registerUser.Email), HttpStatusCodeService.GetHttpStatusIntFromEnum(HttpStatusEnum.OK));
+                    messageDTO = new MessageDTO(string.Format("The user \"{0}\" was registered", registerUser.Username), HttpStatusCodeService.GetHttpStatusIntFromEnum(HttpStatusEnum.OK));
                 }
                 catch(MySqlException myexep)
                 {
                     System.Diagnostics.Debug.WriteLine(myexep.Message);
                     if (myexep.Message.StartsWith("Duplicate entry"))
                     {
-                        messageDTO = new MessageDTO("The email is already in use", HttpStatusCodeService.GetHttpStatusIntFromEnum(HttpStatusEnum.PrimaryKeyFailed));
+                        messageDTO = new MessageDTO("The username is already in use", HttpStatusCodeService.GetHttpStatusIntFromEnum(HttpStatusEnum.PrimaryKeyFailed));
                     }
                     else
                     {

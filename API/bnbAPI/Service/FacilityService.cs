@@ -88,5 +88,24 @@ namespace bnbAPI.Service
             conn.Close();
             return facility;
         }
+
+        public void AddFacilitiesToRoom(int roomID, List<int> facilities)
+        {
+            MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+            MySqlCommand comm = conn.CreateCommand();
+            comm.Parameters.AddWithValue("@roomID", roomID);
+            comm.CommandText = "INSERT INTO Facility_Room(FK_RoomID,FK_FacilityID) VALUE(@roomID, @facilityID);";
+            conn.Open();
+
+            for (int i = 0; i < facilities.Count; i++)
+            {
+                comm.Parameters.AddWithValue("@facilityID", facilities[i]);
+                comm.ExecuteNonQuery();
+                comm.Parameters.RemoveAt("@facilityID");
+            }
+
+            conn.Close();
+        }
     }
 }

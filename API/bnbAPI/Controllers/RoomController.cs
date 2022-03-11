@@ -1,4 +1,6 @@
-﻿using bnbAPI.Logic;
+﻿using bnbAPI.DTO;
+using bnbAPI.Logic;
+using bnbAPI.Static;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -14,6 +16,7 @@ namespace bnbAPI.Controllers
         {
             return Ok(logic.GetSimpleRooms());
         }
+
         [HttpGet("room")]
         public IActionResult GetDetailedRoom([FromQuery] int id)
         {
@@ -27,6 +30,12 @@ namespace bnbAPI.Controllers
                 param = param[0].Split(",");
             }
             return Ok(logic.GetRoomsBySearch(param));
+        }
+
+        [HttpPost("create")]
+        public IActionResult CreateRoom([FromHeader] string authorization, [FromBody] CreateRoomDTO roomDTO)
+        {
+            return StatusCode(200, logic.CreateRoom(AuthorizationHelper.GetAccessTokenFromBearerHeader(authorization),roomDTO));
         }
     }
 }

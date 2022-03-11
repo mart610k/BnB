@@ -25,7 +25,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID;";
+            comm.CommandText = "SELECT room.roomID as RoomID,roomAddress,RoomOwner,RoomBriefDescription,Price,if(rent.RoomID IS NULL,false,True) as booked FROM room LEFT JOIN `Rent` ON room.RoomID = Rent.RoomID AND CURDATE() BETWEEN `From` AND `To`;";
 
             conn.Open();
 
@@ -33,7 +33,7 @@ namespace bnbAPI.Service
 
             while (reader.Read())
             {
-                rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"), reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetString("StatusName"), reader.GetString("RoomBriefDescription")));
+                rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"), reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetBoolean("Booked"), reader.GetString("RoomBriefDescription"), reader.GetInt32("Price")));
             }
             reader.Close();
             conn.Close();
@@ -66,6 +66,60 @@ namespace bnbAPI.Service
             }
             return rooms;
         }
+        
+        public int CreateRoom(string userID, CreateRoomDTO roomDTO)
+        {
+
+            int test = -1;
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+                conn.Open();
+
+                try
+                {
+                    MySqlCommand comm = conn.CreateCommand();
+
+                    comm.CommandText = "INSERT INTO Room(RoomOwner,RoomAddress,RoomDescription,RoomBriefDescription,Price) VALUE (@username,@address,@description,@briefDescription,@price); SELECT @@IDENTITY;";
+                    comm.Parameters.AddWithValue("@username", userID);
+                    comm.Parameters.AddWithValue("@address", roomDTO.Address);
+                    comm.Parameters.AddWithValue("@description", roomDTO.Description);
+                    comm.Parameters.AddWithValue("@briefDescription", roomDTO.BriefDescription);
+                    comm.Parameters.AddWithValue("@price", roomDTO.Price);
+
+
+                    MySqlDataReader reader = comm.ExecuteReader();
+                    while(reader.Read())
+                    {
+                        test = reader.GetInt32("@@IDENTITY");
+                    }
+                }
+                catch (Exception e)
+                {
+                    try
+                    {
+                        if (conn.State == System.Data.ConnectionState.Open)
+                        {
+                            conn.Close();
+                        }
+                        throw e;
+                    }
+                    catch
+                    {
+                        throw e;
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return test;
+        }
 
         public DetailedRoomDTO GetDetailedRoom(int id)
         {
@@ -74,7 +128,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, RoomDescription, StatusName FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID WHERE RoomID = @id";
+            comm.CommandText = "SELECT Room.RoomID as RoomID, RoomAddress, RoomOwner, RoomDescription,Price, if(rent.RoomID IS NULL,false,True) as Booked FROM room LEFT JOIN `Rent` ON room.RoomID = Rent.RoomID AND CURDATE() BETWEEN `From` AND `To` WHERE Room.RoomID = @id";
             comm.Parameters.AddWithValue("@id", id);
 
             conn.Open();
@@ -83,7 +137,7 @@ namespace bnbAPI.Service
 
             while (reader.Read())
             {
-                detailedRoom = new DetailedRoomDTO(reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetInt32("RoomID"), reader.GetString("RoomDescription"), reader.GetString("StatusName"));
+                detailedRoom = new DetailedRoomDTO(reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetInt32("RoomID"), reader.GetString("RoomDescription"),reader.GetBoolean("Booked"), reader.GetInt32("Price"));
             }
             reader.Close();
             conn.Close();

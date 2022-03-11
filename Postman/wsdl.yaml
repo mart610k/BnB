@@ -49,3 +49,4 @@ paths:
             description: There was a conflict with the data on database.
           "500":
             description: Unspecifed error happened.
+  ""

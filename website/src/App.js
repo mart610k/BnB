@@ -1,9 +1,7 @@
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  useParams,
-  useNavigate
+  Route
 } from "react-router-dom";
 import React, { useState } from "react";
 import './App.css';
@@ -13,6 +11,9 @@ import TestSite from "./sites/testSite.js";
 import RegisterSite from "./sites/registerSite.js";
 import HeaderSite from "./sites/headerSite";
 import SearchSite from "./sites/searchSite";
+import LoginSite from './sites/loginSite';
+
+//import { useNavigate } from "react-router-dom";
 
 function App() {
   
@@ -30,6 +31,8 @@ function App() {
             <Route exact path="/room/:RoomID" element={<DetailedRoomSite />} />
             <Route path="/register" element={<RegisterSite />} />
             <Route path="/search" element={<SearchSite />} />
+            <Route path="/room" element={<ListRoomSite />} />
+            <Route path="/login" element={<LoginSite />} />
           </Routes>
         </Router>
       </section>
