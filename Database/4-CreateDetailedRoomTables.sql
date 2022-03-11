@@ -1,24 +1,23 @@
-use bnb;
+USE bnb;
 
- CREATE TABLE `Picture` (
+CREATE TABLE `picture` (
   `FileName` binary(16) NOT NULL,
-  `FK_RoomID` int NOT NULL,
+  `fk_roomid` int NOT NULL,
   PRIMARY KEY (`FileName`),
-  KEY `FK_Picture_Room_id` (`FK_RoomID`),
-  CONSTRAINT `FK_Picture_Room` FOREIGN KEY (`FK_RoomID`) REFERENCES `Room` (`RoomID`)
+  KEY `fk_picture_room_id` (`fk_roomid`),
+  CONSTRAINT `fk_picture_room` FOREIGN KEY (`fk_roomid`) REFERENCES `room` (`roomid`)
 );
 
-CREATE TABLE `Facilities` (
-  `FacilityID` int NOT NULL AUTO_INCREMENT,
-  `FacilityName` varchar(45) NOT NULL,
-  PRIMARY KEY (`FacilityID`)
+CREATE TABLE `facility` (
+  `facilityid` int NOT NULL AUTO_INCREMENT,
+  `facilityname` varchar(45) NOT NULL,
+  PRIMARY KEY (`facilityid`)
 );
 
-CREATE TABLE `Facility_room` (
-  `FK_RoomID` int NOT NULL,
-  `FK_FacilityID` int NOT NULL,
-  PRIMARY KEY (`FK_RoomID`,`FK_FacilityID`),
-  KEY `Facility_Room_id` (`FK_FacilityID`),
-  CONSTRAINT `Facility_Room` FOREIGN KEY (`FK_FacilityID`) REFERENCES `Facilities` (`FacilityID`),
-  CONSTRAINT `Room_Facility` FOREIGN KEY (`FK_RoomID`) REFERENCES `Room` (`RoomID`)
+CREATE TABLE `facility_room` (
+  `fk_roomid` int NOT NULL,
+  `fk_facilityid` int NOT NULL,
+  PRIMARY KEY (`fk_roomid`,`fk_facilityid`),
+  FOREIGN KEY (`fk_roomID`) REFERENCES `room` (`roomid`),
+  FOREIGN KEY (`fk_facilityid`) REFERENCES `facility` (`facilityid`)
 );
