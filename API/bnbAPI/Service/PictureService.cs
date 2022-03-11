@@ -32,6 +32,7 @@ namespace bnbAPI.Service
             {
                 picture.Add(reader.GetString("FileName"));
             }
+            reader.Close();
             conn.Close();
             return picture;
         }

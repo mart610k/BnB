@@ -8,7 +8,7 @@ export default class TestService{
     }
 
     async retrieveTestAPI(){
-        let result = await fetch(this.environmentService.getEnvironmentHost() + "/test");
+        let result = await fetch(this.environmentService.getEnvironmentHost() + "/api/test");
 
         let responseOK = result && result.ok;
 

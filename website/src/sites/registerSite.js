@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import UserService from '../service/userService.js';
 import { useNavigate } from "react-router-dom";
 import "../css/registerSite.css";
-
+import {
+    Link
+}
+from "react-router-dom";
 
 // Wrap and export
 export default function(props) {
@@ -146,6 +149,9 @@ class RegisterSite extends Component {
                     <input type="password" className="InputField"  style={this.state.passwordVerified ? {} : {"backgroundColor":"#c43131"}} name="passwordRepeatedInput" value={this.state.passwordRepeatedInput} onChange={this.handleChange} placeholder="Password" required/> <br/>
 
                     <button className="SubmitButton" type="submit" >Register</button>
+
+                    <label><Link to="/login">Already got an account? sign in here</Link></label><br/>
+
                 </form>
             </div>
         )

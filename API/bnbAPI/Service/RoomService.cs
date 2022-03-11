@@ -25,7 +25,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID;";
+            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room JOIN StatusRoom ON room.RoomID = StatusRoom.FK_RoomID JOIN status ON FK_StatusID = status.StatusID;";
 
             conn.Open();
 
@@ -35,6 +35,7 @@ namespace bnbAPI.Service
             {
                 rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"), reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetString("StatusName"), reader.GetString("RoomBriefDescription")));
             }
+            reader.Close();
             conn.Close();
             return rooms;
         }
@@ -46,7 +47,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, RoomDescription, StatusName FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID WHERE RoomID = @id";
+            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, RoomDescription, StatusName FROM room JOIN StatusRoom ON room.RoomID = StatusRoom.FK_RoomID JOIN status ON FK_StatusID = status.StatusID WHERE RoomID = @id";
             comm.Parameters.AddWithValue("@id", id);
 
             conn.Open();
@@ -57,6 +58,7 @@ namespace bnbAPI.Service
             {
                 detailedRoom = new DetailedRoomDTO(reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetInt32("RoomID"), reader.GetString("RoomDescription"), reader.GetString("StatusName"));
             }
+            reader.Close();
             conn.Close();
             return detailedRoom;
         }

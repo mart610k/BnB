@@ -33,6 +33,8 @@ namespace bnbAPI.Service
             {
                 facility.Add(reader.GetString("FacilityName"));
             }
+
+            reader.Close();
             conn.Close();
             return facility;
         }

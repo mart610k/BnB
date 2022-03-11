@@ -14,6 +14,7 @@ namespace bnbAPI.Controllers
         {
             return Ok(logic.GetSimpleRooms());
         }
+
         [HttpGet("room")]
         public IActionResult GetDetailedRoom([FromQuery] int id)
         {

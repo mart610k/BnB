@@ -4,12 +4,11 @@ import RegisterSite from "./sites/registerSite.js";
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  useParams,
-  useNavigate
+  Route
 } from "react-router-dom";
 import ListRoomSite from './sites/listRoomSite';
 import DetailedRoomSite from './sites/detailedRoomSite';
+import LoginSite from './sites/loginSite';
 
 //import { useNavigate } from "react-router-dom";
 
@@ -27,6 +26,7 @@ function App() {
             <Route exact path="/room/:RoomID" element={<DetailedRoomSite />} />
             <Route path="/register" element={<RegisterSite />} />
             <Route path="/room" element={<ListRoomSite />} />
+            <Route path="/login" element={<LoginSite />} />
           </Routes>
         </Router>
       </section>
