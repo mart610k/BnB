@@ -103,6 +103,11 @@ namespace bnbAPI.Service
             }
         }
 
+        /// <summary>
+        /// Gets the user ID from the database, returns null when the user dont have an access token or the access token is no longer valid
+        /// </summary>
+        /// <param name="accesstoken"></param>
+        /// <returns></returns>
         public string GetUserIDByAccessToken(string accesstoken)
         {
             string userID = null;
@@ -112,7 +117,7 @@ namespace bnbAPI.Service
 
             MySqlCommand comm = conn.CreateCommand();
 
-            comm.CommandText = "SELECT UserName FROM Oauth2 WHERE AccessToken = UUID_TO_BIN(@accesstoken)";
+            comm.CommandText = "SELECT UserName FROM Oauth2 WHERE AccessToken = UUID_TO_BIN(@accesstoken) AND UTC_TIMESTAMP() < EXPIRES;";
             comm.Parameters.AddWithValue("@accesstoken", accesstoken);
 
             conn.Open();

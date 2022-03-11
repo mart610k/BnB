@@ -14,30 +14,31 @@ namespace bnbAPI.DTO
         public string RoomDesc { get; set; }
         public List<string> RoomPictures { get; set; }
         public List<string> RoomFacilities { get; set; }
-        public string RoomStatus { get; set; }
+        public bool Booked { get; set; }
 
-        public DetailedRoomDTO(string address, string owner, int id, string desc, List<string> pictures, List<string> facilities, string status)
-        {
-            RoomAddress = address;
-            RoomDesc = desc;
-            RoomFacilities = facilities;
-            RoomID = id;
-            RoomPictures = pictures;
-            RoomOwner = owner;
-            RoomStatus = status;
-        }
+        public int Price { get; set; }
+
         public DetailedRoomDTO()
         {
-
+            RoomPictures = new List<string>();
+            RoomFacilities = new List<string>();
         }
 
-        public DetailedRoomDTO(string address, string owner, int id, string desc, string status)
+        public DetailedRoomDTO(string address, string owner, int id, string desc, bool booked, int price) : this()
         {
             RoomAddress = address;
             RoomDesc = desc;
             RoomID = id;
             RoomOwner = owner;
-            RoomStatus = status;
+            Booked = booked;
+            Price = price;
+        }
+
+        public DetailedRoomDTO(string address, string owner, int id, string desc, List<string> pictures, List<string> facilities, bool booked, int price) : this(address,owner,id,desc,booked,price)
+        {
+            RoomFacilities = facilities;
+            RoomPictures = pictures;
+            
         }
     }
 }
