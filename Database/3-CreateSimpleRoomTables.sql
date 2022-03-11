@@ -1,27 +1,25 @@
-use BNB;
+use bnb;
 
-CREATE TABLE `Room` (
-  `RoomID` int NOT NULL AUTO_INCREMENT,
-  `RoomAddress` varchar(45) NOT NULL,
-  `RoomOwner` varchar(128) NOT NULL,
-  `RoomDescription` text,
-  `RoomBriefDescription` varchar(150) NOT NULL,
-  PRIMARY KEY (`RoomID`),
-  KEY `User_Room_id` (`RoomOwner`),
-  CONSTRAINT `User_Room` FOREIGN KEY (`RoomOwner`) REFERENCES `Userinformation` (`Username`)
+CREATE TABLE `room` (
+  `roomid` int NOT NULL AUTO_INCREMENT,
+  `address` varchar(45) NOT NULL,
+  `owner` varchar(128) NOT NULL,
+  `description` text,
+  `briefdescription` varchar(150) NOT NULL,
+  PRIMARY KEY (`roomid`),
+  FOREIGN KEY (`owner`) REFERENCES `userinformation` (`username`)
 );
 
-CREATE TABLE `Status` (
-  `StatusID` int NOT NULL,
-  `StatusName` varchar(45) NOT NULL,
-  PRIMARY KEY (`StatusID`)
+CREATE TABLE `status` (
+  `statusid` int NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`statusid`)
 );
 
-CREATE TABLE `StatusRoom` (
-  `FK_StatusID` int NOT NULL,
-  `FK_RoomID` int NOT NULL,
-  PRIMARY KEY (`FK_StatusID`,`FK_RoomID`),
-  KEY `Room_Status_id` (`FK_RoomID`),
-  CONSTRAINT `Room_Status` FOREIGN KEY (`FK_RoomID`) REFERENCES `Room` (`RoomID`),
-  CONSTRAINT `Status_Room` FOREIGN KEY (`FK_StatusID`) REFERENCES `Status` (`StatusID`)
+CREATE TABLE `statusroom` (
+  `fk_statusid` int NOT NULL,
+  `fk_roomid` int NOT NULL,
+  PRIMARY KEY (`fk_statusid`,`fk_roomid`),
+  FOREIGN KEY (`fk_statusid`) REFERENCES `status` (`statusid`),
+  FOREIGN KEY (`fk_roomid`) REFERENCES `room` (`roomid`)
 );
