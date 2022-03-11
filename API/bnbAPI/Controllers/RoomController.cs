@@ -22,6 +22,15 @@ namespace bnbAPI.Controllers
         {
             return Ok(logic.GetDetailedRoom(id));
         }
+        [HttpGet("search")]
+        public IActionResult GetRoomBySearch([FromQuery] string[] param)
+        {
+            if (param[0].Contains(","))
+            {
+                param = param[0].Split(",");
+            }
+            return Ok(logic.GetRoomsBySearch(param));
+        }
 
         [HttpPost("create")]
         public IActionResult CreateRoom([FromHeader] string authorization, [FromBody] CreateRoomDTO roomDTO)
