@@ -1,0 +1,71 @@
+#searchBox {
+    height: 70vh;
+    width: 80vw;
+    margin: 5vh 10vw 5vh 10vw;
+    /* background-color: orchid; */
+    color: black;
+}
+
+#checkBox {
+    height: 5vh;
+    width: fit-content;
+    background-color: #ccc;
+    margin: 2vh 1vw 2vh 1vw;
+    float: left;
+    border: 1px solid black;
+    border-radius: 7px;
+}
+
+#facility {
+    float: left;
+    width: 3vh;
+    height: 3vh;
+    margin: 1vh 1vw 1vh 1vw;
+}
+
+#facilityLabel {
+    float: left;
+    margin-left: 1vw;
+}
+
+#searchInput {
+    float: left;
+    width: 12vw;
+    height: 5vh;
+    margin: 2vh 2vw 0 2vw;
+    padding-left: 5px;
+    font-size: 14pt;
+    font-style: italic;
+  }
+
+  #simpleSearch {
+    float: left;
+    height: 5vh;
+    width: 10vw;
+    border-radius: 25px;
+    border: 2px solid black;
+    font-size: large;
+    text-shadow: 1px 1px gray;
+    background-color:lightgray;
+    cursor: pointer;
+  }
+  
+  #SimpleSearch:hover {
+    background-color: gray;
+    text-shadow: 1px 1px lightgray;
+  }
+
+  #inputBox {
+      display: block;
+      width: 10vw;
+      height: 10vh;
+      clear: both;
+      position: fixed;
+      top: 70%;
+      left: 44.5%;
+  }
+
+  #facilityBox {
+      width: 90%;
+      margin-left: 4vw;
+  }

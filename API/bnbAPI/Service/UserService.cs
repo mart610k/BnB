@@ -108,7 +108,6 @@ namespace bnbAPI.Service
                         throw e;
                     }
                 }
-
                 conn.Close();
             }
             catch (Exception e)
