@@ -40,26 +40,30 @@ namespace bnbAPI.Service
             return rooms;
         }
 
-        public List<SimpleRoomDTO> GetRoomsBySearch(int id)
+        public List<SimpleRoomDTO> GetRoomsBySearch(string[] id)
         {
             List<SimpleRoomDTO> rooms = new List<SimpleRoomDTO>();
-            MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
 
-            MySqlCommand comm = conn.CreateCommand();
-
-            comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID WHERE RoomID LIKE @id;";
-            comm.Parameters.AddWithValue("@id",id);
-
-            conn.Open();
-
-            MySqlDataReader reader = comm.ExecuteReader();
-
-            while (reader.Read())
+            for (int i = 0; i < id.Length; i++)
             {
-                rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"), reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetString("StatusName"), reader.GetString("RoomBriefDescription")));
+                MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+                MySqlCommand comm = conn.CreateCommand();
+
+                comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room LEFT JOIN status_room ON room.RoomID = status_room.FK_RoomID LEFT JOIN status ON FK_StatusID = status.StatusID Left Join facility_room on room.RoomID = facility_room.FK_RoomID WHERE FK_FacilityID LIKE @id;";
+                comm.Parameters.AddWithValue("@id", Convert.ToInt32(id[i]));
+
+                conn.Open();
+
+                MySqlDataReader reader = comm.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"), reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetString("StatusName"), reader.GetString("RoomBriefDescription")));
+                }
+                reader.Close();
+                conn.Close();
             }
-            reader.Close();
-            conn.Close();
             return rooms;
         }
 
