@@ -50,7 +50,7 @@ namespace bnbAPI.Service
 
                 MySqlCommand comm = conn.CreateCommand();
 
-                comm.CommandText = "SELECT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription FROM room LEFT JOIN status_room ON room.RoomID = status_room.FK_RoomID LEFT JOIN status ON FK_StatusID = status.StatusID Left Join facility_room on room.RoomID = facility_room.FK_RoomID WHERE FK_FacilityID LIKE @id;";
+                comm.CommandText = "SELECT roomid,address,owner,briefdescription,price,if(rent.fk_roomid IS NULL,false,True) as booked FROM room LEFT JOIN status_room ON room.RoomID = status_room.FK_RoomID LEFT JOIN status ON FK_StatusID = status.StatusID Left Join facility_room on room.RoomID = facility_room.FK_RoomID WHERE FK_FacilityID LIKE @id;";
                 comm.Parameters.AddWithValue("@id", Convert.ToInt32(id[i]));
 
                 conn.Open();
@@ -59,7 +59,7 @@ namespace bnbAPI.Service
 
                 while (reader.Read())
                 {
-                    rooms.Add(new SimpleRoomDTO(reader.GetInt32("RoomID"), reader.GetString("RoomAddress"), reader.GetString("RoomOwner"), reader.GetString("StatusName"), reader.GetString("RoomBriefDescription")));
+                    rooms.Add(new SimpleRoomDTO(reader.GetInt32("roomid"), reader.GetString("address"), reader.GetString("owner"), reader.GetBoolean("booked"), reader.GetString("briefdescription"), reader.GetInt32("price")));
                 }
                 reader.Close();
                 conn.Close();
