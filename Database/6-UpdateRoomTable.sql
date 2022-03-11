@@ -1,19 +1,19 @@
-USE BNB;
+USE bnb;
 
 
-ALTER TABLE `Room` ADD `Price` INT DEFAULT 0 NOT NULL;
+ALTER TABLE `room` ADD `price` INT DEFAULT 0 NOT NULL;
 
-DROP TABLE `StatusRoom`;
+DROP TABLE `statusroom`;
 
-DROP TABLE `Status`;
+DROP TABLE `status`;
 
-CREATE TABLE `Rent`(
-    `RoomId` INT, 
-    `From` DATE NOT NULL, 
-    `To` DATE NOT NULL, 
-    `UserId` VARCHAR(128), 
-    `Accepted` BOOLEAN,
-    FOREIGN KEY(`RoomId`) REFERENCES `Room`(`RoomId`), 
-    FOREIGN KEY(`UserId`) REFERENCES `UserInformation`(`Username`),
-    CONSTRAINT `PK_RentIDTime` PRIMARY KEY (`RoomId`,`UserId`,`From`)
+CREATE TABLE `rent`(
+    `fk_roomid` INT, 
+    `from` DATE NOT NULL, 
+    `to` DATE NOT NULL, 
+    `fk_userid` VARCHAR(128), 
+    `accepted` BOOLEAN,
+    FOREIGN KEY(`fk_roomid`) REFERENCES `room`(`roomid`), 
+    FOREIGN KEY(`fk_userid`) REFERENCES `userinformation`(`username`),
+    CONSTRAINT `pk_rentidtime` PRIMARY KEY (`fk_roomid`,`fk_userid`,`from`)
 );

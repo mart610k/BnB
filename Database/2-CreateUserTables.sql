@@ -1,5 +1,14 @@
-USE BNB; 
+USE bnb; 
 
-CREATE TABLE UserInformation(`Username` VARCHAR(128) PRIMARY KEY, `Email` VARCHAR(128), `Name` VARCHAR(128) NOT NULL, `Created` TIMESTAMP DEFAULT NOW());
+CREATE TABLE `userinformation`(
+    `username` VARCHAR(128) PRIMARY KEY, 
+    `email` VARCHAR(128), 
+    `name` VARCHAR(128) NOT NULL, 
+    `created` TIMESTAMP DEFAULT NOW()
+);
 
-CREATE TABLE UserCredential(`Username` VARCHAR(128) PRIMARY KEY, `Password` VARCHAR(128), FOREIGN KEY(`Username`) REFERENCES UserInformation(`Username`));
+CREATE TABLE `usercredential`(
+    `username` VARCHAR(128) PRIMARY KEY, 
+    `password` VARCHAR(128), 
+    FOREIGN KEY(`username`) REFERENCES userinformation(`username`)
+);

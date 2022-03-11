@@ -1,9 +1,9 @@
-USE BNB;
+USE bnb;
 
-CREATE TABLE `Oauth2`(
-    `UserName` VARCHAR(128) PRIMARY KEY,
-    `AccessToken` BINARY(16) unique,
-    `RefreshToken` BINARY(16) unique,
-    `Expires` Timestamp,
-    FOREIGN KEY(`UserName`) REFERENCES UserInformation(`Username`)
+CREATE TABLE `oauth2`(
+    `username` VARCHAR(128) PRIMARY KEY,
+    `accesstoken` BINARY(16) unique,
+    `refreshtoken` BINARY(16) unique,
+    `expires` Timestamp,
+    FOREIGN KEY(`username`) REFERENCES `userinformation`(`username`)
 );
