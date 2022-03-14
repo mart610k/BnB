@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import RoomService from "../service/roomService";
 import FacilityService from "../service/facilityService";
 import '../css/search.css';
-import logo from '../logo.svg';
+import missingimage from "../icons/svg/missingimage.svg";
 
 
 export default class SearchSite extends Component{
@@ -104,7 +104,7 @@ export default class SearchSite extends Component{
                         {rooms.map(rooms => (
                             <div id='searchRoom' onClick={() => (window.location.href="/room/" + rooms.roomID)} key={rooms.roomID}>
                                 <div id="imageBox">
-                                    <img id='detailedImage' src={rooms.roomPicture[0] == undefined ? logo : ""}></img>
+                                    <img id='detailedImage' src={rooms.roomPicture[0] == undefined ? missingimage : ""}></img>
                                 </div>
                                 <div id='pBox'>
                                 <p className='roomP'>Address: {rooms.roomAddress}</p>
