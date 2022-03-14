@@ -1,10 +1,10 @@
-#searchBox {
+.searchBox {
     height: 70vh;
     width: 80vw;
     margin: 5vh 10vw 5vh 10vw;
-    /* background-color: orchid; */
     color: black;
 }
+
 
 #checkBox {
     height: 5vh;
@@ -69,3 +69,90 @@
       width: 90%;
       margin-left: 4vw;
   }
+
+
+  .roomP:first-child {
+    float: left;
+    height: 100%;
+    margin-left: 4%;
+    max-width: 80%;
+    font-size: 13pt;
+    display: block;
+}
+
+.roomP:nth-child(2) {
+    float: left;
+    height: 100%;
+    margin-left: 16%;
+    max-width: 80%;
+    font-size: 13pt;
+    display: block;
+}
+
+.roomP:nth-child(3) {
+    float: right;
+    height: 100%;
+    margin-right: 6%;
+    max-width: 80%;
+    font-size: 13pt;
+    display: block;
+}
+
+#pBox {
+    float: left;
+    display: block;
+    width: 75%;
+    margin: 1% 0 0 0;
+    text-align: center;
+    border-bottom: 1px black solid;
+    border-right: 1px black solid;
+}
+
+#imageBox {
+    float: left;
+    height:100%;
+    width: 15.9%;
+    display: block;
+    border-right: 1px solid black;
+}
+
+#textBox {
+    float: left;
+    width:75%;
+    border-bottom: 1px black solid;
+    border-right: 1px black solid;
+    margin-top: 1%;
+    text-align: left;
+    height: 55%;
+}
+
+.roomBriefDesc {
+    float: left;
+    max-width: 75%;
+    margin: 0% 1% 0 1%;
+    font-size: 16pt;
+}
+
+#searchRoom {
+    float: left;
+    width: 70vw;
+    height:15vh;
+    margin: 0.5% 0vw 0.5% 5vw;
+    display: block;
+    background-color: grey;
+}
+
+#simplefacTitle {
+    float: right;
+    width: 8.9%;
+    margin:-2.1% 0 0 0%;
+    height:100%;
+    font-size: 12pt;
+    border-bottom: 1px solid black;
+}
+.simplefacilityP {
+    float: right;
+    width: 8.9%;
+    height:100%;
+    font-size: 8pt;
+}
