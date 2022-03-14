@@ -33,15 +33,39 @@
 
 #LoginBox {
   height: 10vh;
-  float: right;
-  width: 15vw;
+  position: fixed;
+  left:95vw;
+  width: 5vw;
 }
 
 #SearchBox {
   float: left;
   align-self: center;
-  margin: 0 15% 0 15%;
+  margin: 0 15% 0 18%;
   width: 50vw;
   height: 10vh;
-  background-color: blue;
+}
+
+#SearchButton{
+  align-self: center;
+  height: 5vh;
+  width: 10vw;
+  border-radius: 25px;
+  border: 2px solid black;
+  font-size: large;
+  text-shadow: 1px 1px grey;
+  background-color: lightgray;
+  margin-top: 2.4%;
+  cursor: pointer;
+}
+
+#loginIcon {
+  width: 5vw;
+  height: 5vh;
+  margin-top: 1vh;
+  margin-bottom: 0;
+}
+
+#LoginText {
+  margin-top: -2vh;
 }

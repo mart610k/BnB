@@ -24,14 +24,19 @@ namespace bnbAPI.Logic
         /// <returns></returns>
         public List<SimpleRoomDTO> GetSimpleRooms()
         {
-            return roomService.GetSimpleRooms();
+            List<SimpleRoomDTO> room = roomService.GetSimpleRooms();
+            for (int i = 0; i < room.Count; i++)
+            {
+                SimpleRoomDTO roomDTO = room[i];
+                roomDTO.Facilities = facilityService.GetFacilities(room[i].RoomID);
+            }
+            return room;
         }
 
         public List<SimpleRoomDTO> GetRoomsBySearch(int[] search)
         {
 
             List<SimpleRoomDTO> room = roomService.GetRoomsBySearch(search);
-            //List<SimpleRoomDTO> room = roomService.GetRoomsBySearch(search);
 
             for (int i = 0; i < room.Count; i++)
             {

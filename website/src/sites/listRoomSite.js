@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RoomService from '../service/roomService';
 import '../css/room.css';
+import logo from '../logo.svg';
 
 export default class ListRoomSite extends Component {
 
@@ -15,8 +16,8 @@ export default class ListRoomSite extends Component {
 
     async getSimpleRooms(){
         let result = await this.roomService.RetrieveSimpleRooms();
+        console.log(result);
         if(result.status === 401){
-            
         }
         else {
             this.setState({
@@ -37,12 +38,13 @@ export default class ListRoomSite extends Component {
         if(rooms.length === 0) return null;
         if(!rooms) return null;
         return (
-            <div>
+            <div id='topbox'>
+                <h2>Rooms</h2>
                 {rooms.map(rooms => (
                     
                     <div id='Room' onClick={() => (window.location.href="/room/" + rooms.roomID)} key={rooms.roomID}>
                         <div id="imageBox">
-
+                        <img id='detailedImage' src={rooms.roomPicture[0] == undefined ? logo : ""}></img>
                         </div>
                         <div id='pBox'>
                         <p className='roomP'>Address: {rooms.roomAddress}</p>
@@ -53,7 +55,10 @@ export default class ListRoomSite extends Component {
                             <p className='roomBriefDesc'>{rooms.roomDesc}</p>
                         </div>
                         <div id="Facilities">
-                            
+                            <p id="simplefacTitle">Facilities</p>
+                            {rooms.facilities.map(facility => (
+                                <p className='simplefacilityP'>{facility.facilityName}</p>
+                            ))}
                         </div>
                     </div>
                     
