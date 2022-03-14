@@ -3,7 +3,7 @@
 }
 
 .App-header {
-  background-color: black;
+  background-color: darkgray;
   max-height: 10vh;
   width: 100vw;
   float: left;
@@ -15,14 +15,13 @@
 .App-section {
   float: left;
   background-color: lightgrey;
-  min-height: 90vh;
+  height: 80vh;
   min-width: 100vw;
   max-width: 100vw;
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
-  color: white;
-  overflow: vertical;
+  overflow: auto;
 }
 
 #LogoBox {
@@ -69,4 +68,31 @@
 
 #LoginText {
   margin-top: -2vh;
+}
+
+footer {
+  float: left;
+  width: 100vw;
+  height: 10vh;
+  background-color: darkgray;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: lightgrey;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
