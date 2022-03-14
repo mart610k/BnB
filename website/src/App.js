@@ -35,6 +35,9 @@ function App() {
           </Routes>
         </Router>
       </section>
+      <footer>
+        
+      </footer>
     </div>
   );
 }
