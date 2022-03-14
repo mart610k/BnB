@@ -15,8 +15,8 @@
 .roomP:first-child {
     float: left;
     height: 100%;
-    margin-left: 4%;
-    max-width: 80%;
+    margin-left:1% !important;
+    width: 25%;
     font-size: 13pt;
     display: block;
 }
@@ -24,8 +24,8 @@
 .roomP:nth-child(2) {
     float: left;
     height: 100%;
-    margin-left: 16%;
-    max-width: 80%;
+    margin-left: 8% !important;
+    width: 23%;
     font-size: 13pt;
     display: block;
 }
@@ -34,7 +34,7 @@
     float: right;
     height: 100%;
     margin-right: 6%;
-    max-width: 80%;
+    width: 30%;
     font-size: 13pt;
     display: block;
 }

@@ -138,7 +138,7 @@ namespace bnbAPI.Service
             return userID;
         }
 
-        public string GetUserIDByRefreshToken(string refreshToken)
+        public string GetUserIDByRefreshToken(string refreshtoken)
         {
             string userID = null;
 
@@ -148,7 +148,7 @@ namespace bnbAPI.Service
             MySqlCommand comm = conn.CreateCommand();
 
             comm.CommandText = "SELECT username FROM oauth2 WHERE refreshtoken = UUID_TO_BIN(@refreshToken)";
-            comm.Parameters.AddWithValue("@refreshToken", refreshToken);
+            comm.Parameters.AddWithValue("@refreshToken", refreshtoken);
 
             conn.Open();
 
@@ -168,7 +168,7 @@ namespace bnbAPI.Service
             return userID;
         }
 
-        public AccessTokenDTO GetAccessTokenByUserID(string userID)
+        public AccessTokenDTO GetAccessTokenByUserID(string userid)
         {
             AccessTokenDTO accessTokenDTO = null;
 
@@ -177,7 +177,7 @@ namespace bnbAPI.Service
             MySqlCommand comm = conn.CreateCommand();
 
             comm.CommandText = "SELECT BIN_TO_UUID(accesstoken),BIN_TO_UUID(refreshtoken),TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(), expires) as expiresin FROM oauth2 WHERE username = @userID";
-            comm.Parameters.AddWithValue("@userID", userID);
+            comm.Parameters.AddWithValue("@userID", userid);
 
             conn.Open();
 
@@ -203,7 +203,7 @@ namespace bnbAPI.Service
             return accessTokenDTO;
         }
 
-        public AccessTokenDTO GetAccessTokenByAccessToken(string accessToken)
+        public AccessTokenDTO GetAccessTokenByAccessToken(string accesstoken)
         {
             AccessTokenDTO accessTokenDTO = null;
 
@@ -212,7 +212,7 @@ namespace bnbAPI.Service
             MySqlCommand comm = conn.CreateCommand();
 
             comm.CommandText = "SELECT BIN_TO_UUID(accesstoken),BIN_TO_UUID(refreshtoken),TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(), expires) as expiresin FROM oauth2 WHERE accesstoken = UUID_TO_BIN(@accesstoken)";
-            comm.Parameters.AddWithValue("@accesstoken", accessToken);
+            comm.Parameters.AddWithValue("@accesstoken", accesstoken);
 
             conn.Open();
 
@@ -238,7 +238,7 @@ namespace bnbAPI.Service
             return accessTokenDTO;
         }
 
-        public void DeleteAccessTokenEntryByUserID(string userID)
+        public void DeleteAccessTokenEntryByUserID(string userid)
         {
             try
             {
@@ -246,8 +246,8 @@ namespace bnbAPI.Service
 
                 MySqlCommand comm = conn.CreateCommand();
 
-                comm.CommandText = "DELETE FROM oauth2 WHERE username = @UserName";
-                comm.Parameters.AddWithValue("@UserName", userID);
+                comm.CommandText = "DELETE FROM oauth2 WHERE username = @username";
+                comm.Parameters.AddWithValue("@username", userid);
 
                 conn.Open();
 

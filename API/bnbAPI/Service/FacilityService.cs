@@ -25,7 +25,7 @@ namespace bnbAPI.Service
                 MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
 
                 MySqlCommand comm = conn.CreateCommand();
-                comm.CommandText = "Select FacilityName, FacilityID from facility Join facility_room on facility.FacilityID = facility_room.FK_FacilityID Where FK_FacilityID = @id";
+                comm.CommandText = "Select facilityname, facilityid from facility Join facility_room on facility.facilityid = facility_room.fk_facilityid Where fk_facilityid = @id";
                 comm.Parameters.AddWithValue("@id", Convert.ToInt32(facility[i]));
 
                 conn.Open();
@@ -34,16 +34,14 @@ namespace bnbAPI.Service
 
                 while (reader.Read())
                 {
-                    facilityDTO.Add(new FacilityDTO(reader.GetInt32("FacilityID"), reader.GetString("FacilityName")));
+                    facilityDTO.Add(new FacilityDTO(reader.GetInt32("facilityid"), reader.GetString("facilityname")));
                 }
                 reader.Close();
                 conn.Close();
             }
             return facilityDTO;
         }
-        /*
-         SELECT DISTINCT RoomID, RoomAddress, RoomOwner, StatusName, RoomBriefDescription, FROM room JOIN status_room ON room.RoomID = status_room.FK_RoomID JOIN status ON FK_StatusID = status.StatusID JOIN facility_room ON facility_room.FK_RoomID = room.RoomID JOIN facility on facility_room.FK_FacilityID = facility.FacilityID WHERE facility_room.FK_FacilityID = 3 OR facility_room.FK_FacilityID = 4; 
-         */
+
         public List<FacilityDTO> GetFacilities(int id)
         {
             List<FacilityDTO> facility = new List<FacilityDTO>();
@@ -51,7 +49,7 @@ namespace bnbAPI.Service
             using (MySqlConnection conn = new MySqlConnection(Config.GetConnectionString()))
             {
                 MySqlCommand comm = conn.CreateCommand();
-                comm.CommandText = "SELECT FacilityID, FacilityName FROM facility JOIN facility_room ON facility.FacilityID = facility_room.FK_FacilityID JOIN room ON FK_RoomID = room.RoomID where RoomID = @id;";
+                comm.CommandText = "SELECT facilityname, facilityid FROM facility JOIN facility_room ON facility.facilityid = facility_room.fk_facilityid JOIN room ON fk_roomid = room.roomid where roomid = @id;";
                 comm.Parameters.AddWithValue("@id", id);
 
                 conn.Open();
@@ -60,7 +58,7 @@ namespace bnbAPI.Service
 
                 while (reader.Read())
                 {
-                    facility.Add(new FacilityDTO(reader.GetInt32("FacilityID"), reader.GetString("FacilityName")));
+                    facility.Add(new FacilityDTO(reader.GetInt32("facilityid"), reader.GetString("facilityname")));
                 }
             }
             return facility;
@@ -88,20 +86,20 @@ namespace bnbAPI.Service
             return facility;
         }
 
-        public void AddFacilitiesToRoom(int roomID, List<int> facilities)
+        public void AddFacilitiesToRoom(int roomid, List<int> facilities)
         {
             MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
 
             MySqlCommand comm = conn.CreateCommand();
-            comm.Parameters.AddWithValue("@roomID", roomID);
-            comm.CommandText = "INSERT INTO facility_room(fk_roomid,fk_facilityid) VALUE(@roomID, @facilityID);";
+            comm.Parameters.AddWithValue("@roomID", roomid);
+            comm.CommandText = "INSERT INTO facility_room(fk_roomid,fk_facilityid) VALUE(@roomid, @facilityid);";
             conn.Open();
 
             for (int i = 0; i < facilities.Count; i++)
             {
-                comm.Parameters.AddWithValue("@facilityID", facilities[i]);
+                comm.Parameters.AddWithValue("@facilityid", facilities[i]);
                 comm.ExecuteNonQuery();
-                comm.Parameters.RemoveAt("@facilityID");
+                comm.Parameters.RemoveAt("@facilityid");
             }
 
             conn.Close();
