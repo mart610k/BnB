@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import RoomService from '../service/roomService';
 import '../css/room.css';
-import logo from '../logo.svg';
 import missingimage from "../icons/svg/missingimage.svg";
 
 export default class ListRoomSite extends Component {
