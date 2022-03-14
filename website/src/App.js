@@ -12,13 +12,11 @@ import RegisterSite from "./sites/registerSite.js";
 import HeaderSite from "./sites/headerSite";
 import SearchSite from "./sites/searchSite";
 import LoginSite from './sites/loginSite';
+import CreateRoomSite from "./sites/createRoomSite";
 
 //import { useNavigate } from "react-router-dom";
 
 function App() {
-  
-
-  
   return (
     <div className="App">
       <HeaderSite />
@@ -33,6 +31,7 @@ function App() {
             <Route path="/search" element={<SearchSite />} />
             <Route path="/room" element={<ListRoomSite />} />
             <Route path="/login" element={<LoginSite />} />
+            <Route path="/room/create" element={<CreateRoomSite />} />
           </Routes>
         </Router>
       </section>

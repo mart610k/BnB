@@ -40,5 +40,25 @@ export default class RoomService{
         }
     }
 
-    
+    async RegisterRoom(data = {},access_token){
+        data.price = parseInt(data.price);
+        let result = await fetch(this.environmentService.getEnvironmentHost() + "/api/Room/create",{
+            method: "POST",
+            headers: {
+                'Content-Type': 'Application/JSON',
+                'Authorization': 'Bearer ' + access_token
+            },
+            body: JSON.stringify(data)
+        });
+
+        let responseOK = result && result.ok;
+
+        if(responseOK){
+            let data = await result.json();
+            return data;
+        }
+        else{
+            return result;
+        }
+    }
 }
