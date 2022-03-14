@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace bnbAPI.Service
 {
-    public class RentSercixe
+    public class RentService
     {
 
-        public bool CheckRoomAvaibilityForToday(int roomID)
+        public bool CheckRoomAvaibilityForToday(int roomid)
         {
             bool notbooked = true;
             try
@@ -20,9 +20,9 @@ namespace bnbAPI.Service
                 MySqlCommand comm = conn.CreateCommand();
                 conn.Open();
 
-                comm.CommandText = "SELECT `From`, `To`, `Accepted` FROM `Rent` WHERE `RoomId` = @roomID AND CURDATE() between `From` AND `To`;";
+                comm.CommandText = "SELECT `from`, `to`, `accepted` FROM `rent` WHERE `roomid` = @roomid AND CURDATE() between `from` AND `to`;";
 
-                comm.Parameters.AddWithValue("@roomID", roomID);
+                comm.Parameters.AddWithValue("@roomid", roomid);
 
                 MySqlDataReader reader = comm.ExecuteReader();
 
