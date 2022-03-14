@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RoomService from '../service/roomService';
 import '../css/room.css';
 import logo from '../logo.svg';
+import missingimage from '../icons/svg/missingimage.svg';
 import { useParams } from "react-router-dom"
 
 export default function(props){
@@ -49,7 +50,7 @@ class DetailedRoomSite extends Component {
 
         const images = this.state.detailedRoom.roomPictures;
         if(images.length === 0) {
-            images[0] = logo;
+            images[0] = missingimage;
         }
 
         console.log(facilities);

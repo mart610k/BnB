@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RoomService from '../service/roomService';
 import '../css/room.css';
 import logo from '../logo.svg';
+import missingimage from "../icons/svg/missingimage.svg";
 
 export default class ListRoomSite extends Component {
 
@@ -44,7 +45,7 @@ export default class ListRoomSite extends Component {
                     
                     <div id='Room' onClick={() => (window.location.href="/room/" + rooms.roomID)} key={rooms.roomID}>
                         <div id="imageBox">
-                        <img id='detailedImage' src={rooms.roomPicture[0] == undefined ? logo : ""}></img>
+                        <img id='detailedImage' src={rooms.roomPicture[0] == undefined ? missingimage : ""}></img>
                         </div>
                         <div id='pBox'>
                         <p className='roomP'>Address: {rooms.roomAddress}</p>

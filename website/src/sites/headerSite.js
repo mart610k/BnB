@@ -1,6 +1,7 @@
 import { Component } from "react";
 import React, { useState } from "react";
 import RoomService from "../service/roomService";
+import login from '../icons/svg/login.svg';
 import logo from '../logo.svg';
 
 
@@ -55,7 +56,7 @@ class HeaderSite extends Component{
                         <button id="SearchButton" onClick={() => window.location.href="/search"}>Go To Search</button>
                     </div>
                     <div id='LoginBox' onClick={() => window.location.href="/login"}>
-                        <img id="loginIcon" src={logo} ></img>
+                        <img id="loginIcon" src={login} ></img>
                         <p id="LoginText"> Login</p>
                     </div>
                 </header>
