@@ -11,7 +11,7 @@ namespace bnbAPI.Logic
         private FacilityService facilityService = new FacilityService();
         private PictureService pictureService = new PictureService();
         private AuthService authService = new AuthService();
-        private RentSercixe sercixe = new RentSercixe();
+        private RentService sercixe = new RentService();
         
         public RoomLogic()
         {

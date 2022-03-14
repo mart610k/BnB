@@ -12,7 +12,7 @@ namespace bnbAPI.Service
         PasswordHashService passwordHashService = new PasswordHashService();
 
 
-        public UserCredentialsDTO GetUserCredentials(string userID)
+        public UserCredentialsDTO GetUserCredentials(string userid)
         {
             UserCredentialsDTO userCredentials = null;
             try
@@ -30,7 +30,7 @@ namespace bnbAPI.Service
                     comm.Transaction = trans;
 
                     comm.CommandText = "SELECT username,password FROM usercredential WHERE username = @userName;";
-                    comm.Parameters.AddWithValue("@userName", userID);
+                    comm.Parameters.AddWithValue("@userName", userid);
                     MySqlDataReader reader = comm.ExecuteReader();
                     while (reader.Read())
                     {
@@ -64,11 +64,11 @@ namespace bnbAPI.Service
         }
 
 
-        public void RegisterUser(RegisterUserDTO registerUser)
+        public void RegisterUser(RegisterUserDTO registeruser)
         {
             try
             {
-                string hashedPassword = passwordHashService.Hash(registerUser.Password);
+                string hashedPassword = passwordHashService.Hash(registeruser.Password);
                 
                 MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
 
@@ -83,9 +83,9 @@ namespace bnbAPI.Service
                     comm.Transaction = trans;
 
                     comm.CommandText = "INSERT INTO userinformation(username,email,name) VALUE (@username,@email,@name);";
-                    comm.Parameters.AddWithValue("@username", registerUser.Username);
-                    comm.Parameters.AddWithValue("@email", registerUser.Email);
-                    comm.Parameters.AddWithValue("@name", registerUser.Name);
+                    comm.Parameters.AddWithValue("@username", registeruser.Username);
+                    comm.Parameters.AddWithValue("@email", registeruser.Email);
+                    comm.Parameters.AddWithValue("@name", registeruser.Name);
                     comm.ExecuteNonQuery();
                     comm.CommandText = "INSERT INTO usercredential(username,password) VALUE (@username,@password);";
                     comm.Parameters.AddWithValue("@password", hashedPassword);
