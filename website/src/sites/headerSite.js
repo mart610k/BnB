@@ -1,6 +1,7 @@
 import { Component } from "react";
 import React, { useState } from "react";
 import RoomService from "../service/roomService";
+import logo from '../logo.svg';
 
 
 export default function (props) {
@@ -41,7 +42,6 @@ class HeaderSite extends Component{
         }
 
         componentDidMount(){
-            this.GetsRoomBySearch()
         }
     
         render() {
@@ -49,13 +49,14 @@ class HeaderSite extends Component{
             return (
                 <header className="App-header">
                     <div id='LogoBox'>
-          
+                        <img id='detailedImage' onClick={() => window.location.href="/"} src={logo}></img>
                     </div>
                     <div id='SearchBox'>
-                    <button onClick={() => window.location.href="/search"}>Go To Search</button>
+                        <button id="SearchButton" onClick={() => window.location.href="/search"}>Go To Search</button>
                     </div>
-                    <div id='LoginBox'>
-                    
+                    <div id='LoginBox' onClick={() => window.location.href="/login"}>
+                        <img id="loginIcon" src={logo} ></img>
+                        <p id="LoginText"> Login</p>
                     </div>
                 </header>
             )

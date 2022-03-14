@@ -2,7 +2,8 @@
 using bnbAPI.Logic;
 using bnbAPI.Static;
 using Microsoft.AspNetCore.Mvc;
-
+using System;
+using System.Collections.Generic;
 
 namespace bnbAPI.Controllers
 {
@@ -23,13 +24,20 @@ namespace bnbAPI.Controllers
             return Ok(logic.GetDetailedRoom(id));
         }
         [HttpGet("search")]
-        public IActionResult GetRoomBySearch([FromQuery] string[] param)
+        public IActionResult GetRoomBySearch([FromQuery] string param)
         {
-            if (param[0].Contains(","))
+            int[] test = new int[0];
+            if (param != null)
             {
-                param = param[0].Split(",");
+                string[] arry = param.Split(",");
+                test = new int[arry.Length];
+                for (int i = 0; i < arry.Length; i++)
+                {
+                    test[i] = (Convert.ToInt32(arry[i]));
+                }
             }
-            return Ok(logic.GetRoomsBySearch(param));
+
+            return Ok(logic.GetRoomsBySearch(test));
         }
 
         [HttpPost("create")]
