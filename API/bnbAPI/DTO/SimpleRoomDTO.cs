@@ -14,7 +14,6 @@ namespace bnbAPI.DTO
         public string RoomDesc { get; set; }
         public List<string> RoomPicture { get; set; }
         public List<FacilityDTO> Facilities { get; set; }
-
         public int Price { get; set; }
 
         public SimpleRoomDTO()

@@ -61,4 +61,30 @@ export default class RoomService{
             return result;
         }
     }
+
+    async BookRoom(id, start, end ,access_token){
+        let object = {
+            RoomID : id,
+            StartDate : start,
+            EndDate : end
+        }
+        let result = await fetch(this.environmentService.getEnvironmentHost() + "/api/Room/order",{
+            method: "POST",
+            headers: {
+                'Content-Type': 'Application/JSON',
+                'Authorization': 'Bearer ' + access_token
+            },
+            body: JSON.stringify(object)
+        });
+
+        let responseOK = result && result.ok;
+
+        if(responseOK){
+            let data = await result.json();
+            return data;
+        }
+        else{
+            return result;
+        }
+    }
 }

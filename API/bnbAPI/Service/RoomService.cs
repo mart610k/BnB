@@ -144,6 +144,55 @@ namespace bnbAPI.Service
             return test;
         }
 
+        public void BookRoom(string userid, BookedRoomDTO bookedroomdto)
+        {
+
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+                conn.Open();
+                /*ToString("yyyy/dd/MM")*/
+                try
+                {
+                    MySqlCommand comm = conn.CreateCommand();
+
+                    comm.CommandText = "INSERT INTO rent (fk_roomid, `from`, `to`, fk_userid, accepted) values (@roomid, @from, @to, @user_id, @accept)";
+                    comm.Parameters.AddWithValue("@roomid", bookedroomdto.RoomID);
+                    
+                    comm.Parameters.AddWithValue("@from", bookedroomdto.StartDate.ToString("yyyy/MM/dd"));
+                    comm.Parameters.AddWithValue("@to", bookedroomdto.EndDate.Date.ToString("yyyy/MM/dd"));
+                    comm.Parameters.AddWithValue("@user_id", userid);
+                    comm.Parameters.AddWithValue("@accept", false);
+
+                    comm.ExecuteNonQuery();
+
+                    
+                }
+                catch (Exception e)
+                {
+                    try
+                    {
+                        if (conn.State == System.Data.ConnectionState.Open)
+                        {
+                            conn.Close();
+                        }
+                        throw e;
+                    }
+                    catch
+                    {
+                        throw e;
+                    }
+                }
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+
         public DetailedRoomDTO GetDetailedRoom(int id)
         {
             DetailedRoomDTO detailedRoom = null;
