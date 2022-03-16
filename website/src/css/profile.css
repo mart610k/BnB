@@ -25,10 +25,15 @@
     cursor: pointer;
 }
 
-.navP {
+.navA{
     text-align: center;
     font-size: 13pt;
-    margin: 1.7vh 0 0 0;
+    padding: 1.7vh 0 0 0;
+    height: 78%;
+    width: 100%;
+    display: block;
+    color: black;
+    text-decoration: none;
 }
 
 #profileMain {
@@ -45,6 +50,11 @@
     width: 100%;
     height: 100%;
     border-bottom: 1px solid black;
+    margin: 0;
+}
+
+.profileH2 {
+    margin-top: 3.5vh;
 }
 
 .inputBox {
@@ -70,4 +80,22 @@
 
 .leftMargin {
     margin-left: 5.7vw;
+}
+
+.profileButton {
+    position: relative;
+    left: -1.5vw;
+    top: 7vh;
+    width: 5vw;
+    height: 5vh;
+    font-size: 16pt;
+    border-radius: 12px;
+    text-shadow: 1px 1px grey;
+    background-color: lightgray;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+.profileButton:hover {
+    background-color: #bbb;
 }

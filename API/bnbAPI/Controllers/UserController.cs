@@ -12,6 +12,7 @@ namespace bnbAPI.Controllers
     public class UserController : ControllerBase
     {
         UserLogic userLogic = new UserLogic();
+        AuthService authService = new AuthService();
 
         [HttpPost("register")]
         public IActionResult RegisterUser([FromBody] RegisterUserDTO registerUser)
@@ -37,6 +38,29 @@ namespace bnbAPI.Controllers
 
                 return StatusCode(messageDTO.StatusCode, messageDTO);
             }
+        }
+        [HttpPost("UpdatePass")]
+        public IActionResult UpdatePassword([FromBody] UpdatePassDTO updatePass, [FromHeader] string authorization)
+        {
+            string token = AuthorizationHelper.GetAccessTokenFromBearerHeader(authorization);
+            string userid = authService.GetUserIDByAccessToken(token);
+            updatePass.UserID = userid;
+
+            userLogic.UpdatePassword(updatePass);
+
+            return Ok();
+        }
+
+        [HttpPost("UpdateEmail")]
+        public IActionResult UpdateEmail([FromBody] UpdateEmailDTO updateEmail, [FromHeader] string authorization)
+        {
+            string token = AuthorizationHelper.GetAccessTokenFromBearerHeader(authorization);
+            string userid = authService.GetUserIDByAccessToken(token);
+            updateEmail.UserID = userid;
+
+            userLogic.UpdateEmail(updateEmail);
+
+            return Ok();
         }
     }
 }

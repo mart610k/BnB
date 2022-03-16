@@ -82,12 +82,29 @@ namespace bnbAPI.Logic
                     throw new UserNotAuthorizedForActionException();
                 }
             }
+        }
+        public void UpdatePassword(UpdatePassDTO updatePass)
+        {
+            try
+            {
+                userService.UpdateUserPassword(updatePass);
+            }
             catch (Exception e)
             {
                 throw e;
             }
         }
 
-        
+        public void UpdateEmail(UpdateEmailDTO updateEmail)
+        {
+            try
+            {
+                userService.UpdateEmail(updateEmail);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
