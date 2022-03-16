@@ -48,11 +48,15 @@ export default class ProfileSite extends Component {
 
     async requestAsHost(){
         if(this.state.requestText !== ""){
-            let result = this.userService.requestAsHost();
+            let result = await this.userService.requestAsHost({RequestText : this.state.requestText},this.GetValueFromCookie("access_token"));
 
             if(result.statusCode === 500){
                 alert()
             }
+            else if (result.statusCode === 409){
+                alert("You already have a request to become a host outstanding you cant create another");
+            }
+            
         }
         else{
             alert("The input field is empty")
@@ -94,7 +98,7 @@ export default class ProfileSite extends Component {
                 </div>
                 <div id='profileMain'>
                     
-                    <div className='fullSize'>
+                    <div id="Password" className='fullSize'>
                         <h2>Ændre Password</h2>
                         <div className='inputBox'>
                             <label className='profileLabel'>Nuværende Password: </label>
@@ -128,7 +132,7 @@ export default class ProfileSite extends Component {
                     </div>
                     <div id="Udlej" className='fullSize'>
                         <label>Request Text:</label><br/>
-                        <textarea value={this.state.requestText} onChange={this.handleChange} type="requestText" placeholder="Reasons why you should become a host" style={{"width": "80%", "height" : "50%"}}>
+                        <textarea value={this.state.requestText} name="requestText" onChange={this.handleChange} type="requestText" placeholder="Reasons why you should become a host" style={{"width": "80%", "height" : "50%"}}>
                         </textarea><br/>
                         <button onClick={() => this.requestAsHost()}>Send Request</button>
                     </div>

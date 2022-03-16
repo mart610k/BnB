@@ -1,4 +1,4 @@
-﻿using bnbAPI.CostumException;
+﻿using bnbAPI.CustomException;
 using bnbAPI.DTO;
 using bnbAPI.Enum;
 using bnbAPI.Service;
@@ -72,7 +72,7 @@ namespace bnbAPI.Logic
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new OutstandingRequestPresentException();
                     }
 
 
@@ -81,6 +81,10 @@ namespace bnbAPI.Logic
                 {
                     throw new UserNotAuthorizedForActionException();
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
         public void UpdatePassword(UpdatePassDTO updatePass)

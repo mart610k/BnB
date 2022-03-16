@@ -1,4 +1,4 @@
-﻿using bnbAPI.CostumException;
+﻿using bnbAPI.CustomException;
 using bnbAPI.DTO;
 using bnbAPI.Enum;
 using System;
@@ -38,6 +38,9 @@ namespace bnbAPI.Service
             {
                 case nameof(UserNotAuthorizedForActionException):
                     toReturn = new MessageDTO("Missing required rights to perform action",GetHttpStatusIntFromEnum(HttpStatusEnum.ForbiddenAction));
+                    break;
+                case nameof(OutstandingRequestPresentException):
+                    toReturn = new MessageDTO("you already have a request in process cant search", GetHttpStatusIntFromEnum(HttpStatusEnum.PrimaryKeyFailed));
                     break;
                 default:
                     toReturn = CreateUnSpecifedError(e);

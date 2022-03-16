@@ -1,4 +1,4 @@
-﻿using bnbAPI.CostumException;
+﻿using bnbAPI.CustomException;
 using bnbAPI.DTO;
 using bnbAPI.Service;
 using System;

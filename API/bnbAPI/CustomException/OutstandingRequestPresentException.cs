@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace bnbAPI.CustomException
 {
-    public class UserNotAuthorizedForActionException : Exception
+    public class OutstandingRequestPresentException : Exception
     {
     }
 }
