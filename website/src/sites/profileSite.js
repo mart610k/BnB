@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AuthService from '../service/authService';
 import UserService from '../service/userService';
+import "../css/profile.css";
 
 
 
@@ -11,37 +12,115 @@ export default class ProfileSite extends Component {
         this.userService = new UserService();
 
         this.authservice = new AuthService();
+
+        this.handleChange = this.handleChange.bind(this);
         
         this.state = {
-            version : null,
+            oldPassword : "",
+            newPassword : "",
+            confirmedNewPassword : "",
+            oldEmail : "",
+            newEmail : "",
+            confirmedNewEmail : ""
         }
     }
 
-    async getTest(){
-        let result = await this.testService.retrieveTestAPI();
-        if(result.status === 401){
-            
-        }
-        else {
-            console.log(result);
-            this.setState({
-                version : result.version
-            })
-        }
-
-    }
 
     componentDidMount(){
-        //this.getTest();
+
     }
 
+    GetValueFromCookie(cname){
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+    handleChange(event){
+        this.setState({
+            [event.target.name] : event.target.value
+        });
+    }
+
+    async UpdatePassword(){
+            await this.userService.UpdatePassword(
+                this.state.oldPassword,
+                this.state.newPassword,
+                this.state.confirmedNewPassword,
+                this.GetValueFromCookie("access_token")
+            );
+    }
+
+    async UpdateEmail(){
+        await this.userService.UpdateEmail(
+            this.state.oldEmail,
+            this.state.newEmail,
+            this.state.confirmedNewEmail,
+            this.GetValueFromCookie("access_token")
+        );
+    }
 
     render()
     {
-        
         return (
             <div>
-                <p>Hello</p>
+                <div id='profileNav'>
+                    <div className='navBox'>
+                        <a href="#Password" className='navA'>Ændre Password</a>
+                    </div>
+                    <div className='navBox'>
+                        <a href='#Email' className='navA'>Ændre Email</a>
+                    </div>
+                    <div className='navBox'>
+                        <a href='#Udlej' className='navA'>Ansøg udlejer</a>
+                    </div>
+                </div>
+                <div id='profileMain'>
+                    <div id='Password' className='fullSize'>
+                        <h2 className='profileH2'>Ændre Password</h2>
+                        <div className='inputBox'>
+                            <label className='profileLabel'>Nuværende Password: </label>
+                            <input className='profileInput' value={this.state.oldPassword} name="oldPassword" onChange={this.handleChange} type="password" placeholder='Nuværende Password'></input>
+                        </div>
+                        <div className='inputBox'>
+                            <label className='profileLabel'>Nyt Password: </label>
+                            <input className='profileInput leftMargin' value={this.state.newPassword} name="newPassword" onChange={this.handleChange} type="password" placeholder='Nyt Password'></input>
+                        </div>
+                        <div className='inputBox'>
+                            <label className='profileLabel'>Gentag Nyt Password: </label>
+                            <input className='profileInput' onChange={this.handleChange} name="confirmedNewPassword" value={this.state.confirmedNewPassword} type="password" placeholder='Gentag Nyt Password'></input>
+                        </div>
+                        <button className='profileButton' onClick={() => this.UpdatePassword()}>Gem</button>
+                    </div>
+                    <div id='Email' className='fullSize'>
+                        <h2 className='profileH2'>Ændre Email</h2>
+                        <div className='inputBox'>
+                            <label className='profileLabel'>Nuværende Email: </label>
+                            <input className='profileInput' onChange={this.handleChange} name="oldEmail" value={this.state.oldEmail} type="email" placeholder='Nuværende Email'></input>
+                        </div>
+                        <div className='inputBox'>
+                            <label className='profileLabel'>Nyt Email: </label>
+                            <input className='profileInput leftMargin' onChange={this.handleChange} name="newEmail" value={this.state.newEmail} type="email" placeholder='Ny Email'></input>
+                        </div>
+                        <div className='inputBox'>
+                            <label className='profileLabel'>Gentag Nyt Email: </label>
+                            <input className='profileInput' onChange={this.handleChange} name="confirmedNewEmail" value={this.state.confirmedNewEmail} type="email" placeholder='Gentag Ny Email'></input>
+                        </div>
+                        <button className='profileButton' onClick={() => this.UpdateEmail()}>Gem</button>
+                    </div>
+                    <div className='fullSize'>
+
+                    </div>
+                </div>
             </div>
         )
     }

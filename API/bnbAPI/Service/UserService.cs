@@ -60,7 +60,7 @@ namespace bnbAPI.Service
             {
                 throw e;
             }
-        return userCredentials;
+            return userCredentials;
         }
 
 
@@ -69,7 +69,7 @@ namespace bnbAPI.Service
             try
             {
                 string hashedPassword = passwordHashService.Hash(registeruser.Password);
-                
+
                 MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
 
                 conn.Open();
@@ -92,12 +92,12 @@ namespace bnbAPI.Service
                     comm.ExecuteNonQuery();
                     trans.Commit();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     try
                     {
                         trans.Rollback();
-                        if(conn.State == System.Data.ConnectionState.Open)
+                        if (conn.State == System.Data.ConnectionState.Open)
                         {
                             conn.Close();
                         }
@@ -112,6 +112,105 @@ namespace bnbAPI.Service
             }
             catch (Exception e)
             {
+                throw e;
+            }
+        }
+
+        public void UpdateUserPassword(UpdatePassDTO updatePass)
+        {
+            try
+            {
+                string oldHashedPassword = passwordHashService.Hash(updatePass.OldPass);
+
+
+                MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+                conn.Open();
+
+                try
+                {
+                    if (passwordHashService.Verify(updatePass.OldPass, GetUserCredentials(updatePass.UserID).PasswordHashed))
+                    {
+                        if (updatePass.NewPass != null)
+                        {
+
+                            string newHashedPassword = passwordHashService.Hash(updatePass.NewPass);
+                            MySqlCommand comm = conn.CreateCommand();
+
+                            comm.CommandText = "UPDATE usercredential SET password = @pass WHERE username = @username;";
+                            comm.Parameters.AddWithValue("@pass", newHashedPassword);
+                            comm.Parameters.AddWithValue("@username", updatePass.UserID);
+
+                            comm.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    try
+                    {
+                        if (conn.State == System.Data.ConnectionState.Open)
+                        {
+                            conn.Close();
+                        }
+                        throw e;
+                    }
+                    catch
+                    {
+
+                        throw e;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+
+        public void UpdateEmail(UpdateEmailDTO updateEmail)
+        {
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
+
+                conn.Open();
+
+                try
+                {
+                    if (updateEmail.NewEmail != null)
+                    {
+
+                        MySqlCommand comm = conn.CreateCommand();
+
+                        comm.CommandText = "UPDATE userinformation SET email = @email WHERE username = @username;";
+                        comm.Parameters.AddWithValue("@email", updateEmail.NewEmail);
+                        comm.Parameters.AddWithValue("@username", updateEmail.UserID);
+
+                        comm.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception e)
+                {
+                    try
+                    {
+                        if (conn.State == System.Data.ConnectionState.Open)
+                        {
+                            conn.Close();
+                        }
+                        throw e;
+                    }
+                    catch
+                    {
+
+                        throw e;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
                 throw e;
             }
         }

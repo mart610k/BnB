@@ -53,5 +53,29 @@ namespace bnbAPI.Logic
 
             return messageDTO;
         }
+
+        public void UpdatePassword(UpdatePassDTO updatePass)
+        {
+            try
+            {
+                userService.UpdateUserPassword(updatePass);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void UpdateEmail(UpdateEmailDTO updateEmail)
+        {
+            try
+            {
+                userService.UpdateEmail(updateEmail);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
