@@ -16,7 +16,6 @@ export default class ListRoomSite extends Component {
 
     async getSimpleRooms(){
         let result = await this.roomService.RetrieveSimpleRooms();
-        console.log(result);
         if(result.status === 401){
         }
         else {
@@ -42,7 +41,7 @@ export default class ListRoomSite extends Component {
                 <h2>Rooms</h2>
                 {rooms.map(rooms => (
                     
-                    <div id='Room' onClick={() => (window.location.href="/room/" + rooms.roomID)} key={rooms.roomID}>
+                    <div key={"room_" + rooms.roomID} id='Room' onClick={() => (window.location.href="/room/" + rooms.roomID)} key={rooms.roomID}>
                         <div id="imageBox">
                         <img id='detailedImage' src={rooms.roomPicture[0] == undefined ? missingimage : ""}></img>
                         </div>
@@ -57,7 +56,7 @@ export default class ListRoomSite extends Component {
                         <div id="Facilities">
                             <p id="simplefacTitle">Facilities</p>
                             {rooms.facilities.map(facility => (
-                                <p className='simplefacilityP'>{facility.facilityName}</p>
+                                <p key={"facilityID_" + facility.facilityID } className='simplefacilityP'>{facility.facilityName}</p>
                             ))}
                         </div>
                     </div>

@@ -62,9 +62,13 @@ class CreateRoomSite extends Component {
     async RegisterRoom(event){
         event.preventDefault();
         let result = await this.roomService.RegisterRoom(this.state,this.GetValueFromCookue("access_token"));
-        console.log(result.statusCode);
+        console.log(result);
         if(result.statusCode === 401){
 
+        }
+        else if (result.status == 403){
+            alert("You do not have rights for this endpoint you will now be redirected the base site");
+            this.props.history("/");
         }
         else if(result.statusCode === undefined){
             alert("Your room have now been created you will now be redirected to the base site")
