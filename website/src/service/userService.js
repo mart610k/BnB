@@ -26,6 +26,24 @@ export default class UserService{
         }
     }
 
+    async requestAsHost(data = {}, access_token){
+        let result = await fetch(this.environmentService.getEnvironmentHost() + "/api/user/request/host",{
+            method: "POST",
+            headers: {
+                'Content-Type': 'Application/JSON',
+                'Authorization': 'Bearer ' + access_token
+            },
+            body: JSON.stringify(data)
+        });
+
+        let json = await result.json();
+        if(json === ""){
+            json = {statusCode : result.status}
+        }
+
+        return json
+    }
+    
     async UpdatePassword(oldpass, newpass, confirmednewpass ,access_token){
         let object;
         if (newpass == confirmednewpass && oldpass != null) {

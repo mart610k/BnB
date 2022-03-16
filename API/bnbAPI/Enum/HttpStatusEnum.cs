@@ -10,6 +10,7 @@ namespace bnbAPI.Enum
         OK,
         PrimaryKeyFailed,
         UnspecifiedError,
-        ClientFormatError
+        ClientFormatError,
+        ForbiddenAction
     }
 }

@@ -1,4 +1,5 @@
-﻿using bnbAPI.DTO;
+﻿using bnbAPI.CustomException;
+using bnbAPI.DTO;
 using bnbAPI.Enum;
 using bnbAPI.Service;
 using bnbAPI.Static;
@@ -10,6 +11,8 @@ namespace bnbAPI.Logic
     public class UserLogic
     {
         UserService userService = new UserService();
+        AuthService authService = new AuthService();
+        UserTypeRightsService userrightsService = new UserTypeRightsService();
 
         /// <summary>
         /// Responsible for calling the service and decoding the potential error coming from the servixe.
@@ -54,6 +57,36 @@ namespace bnbAPI.Logic
             return messageDTO;
         }
 
+        public void RequestUserAsHost(string access_token, RequestHostDTO requestHostDTO)
+        {
+            try
+            {
+                string userID = authService.GetUserIDByAccessToken(access_token);
+
+                if (userID != null && !userrightsService.GetIfUserIsHost(userID))
+                {
+                    if (!userService.UserHaveOutstandingHostRequest(userID))
+                    {
+                        userService.RequestUserAsHost(userID, requestHostDTO);
+
+                    }
+                    else
+                    {
+                        throw new OutstandingRequestPresentException();
+                    }
+
+
+                }
+                else
+                {
+                    throw new UserNotAuthorizedForActionException();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public void UpdatePassword(UpdatePassDTO updatePass)
         {
             try

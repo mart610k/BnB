@@ -7,6 +7,7 @@ import {
 }
 from "react-router-dom";
 
+
 // Wrap and export
 export default function(props) {
     const navigation = useNavigate();
@@ -109,7 +110,6 @@ class RegisterSite extends Component {
 
     
     handleCheckboxChange(event){
-
         this.setState({
             showpass : !this.state.showpass
         });

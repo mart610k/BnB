@@ -3,7 +3,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import './App.css';
 import ListRoomSite from './sites/listRoomSite';
 import DetailedRoomSite from './sites/detailedRoomSite';
@@ -14,6 +14,7 @@ import SearchSite from "./sites/searchSite";
 import LoginSite from './sites/loginSite';
 import CreateRoomSite from "./sites/createRoomSite";
 import ProfileSite from "./sites/profileSite";
+import LogoutSite from "./sites/logoutSite";
 
 //import { useNavigate } from "react-router-dom";
 
@@ -34,6 +35,7 @@ function App() {
             <Route path="/login" element={<LoginSite />} />
             <Route path="/room/create" element={<CreateRoomSite />} />
             <Route path="/profile" element={<ProfileSite />} />
+            <Route path="/logout" element={<LogoutSite />} />
           </Routes>
         </Router>
       </section>

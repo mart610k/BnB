@@ -1,4 +1,5 @@
-﻿using bnbAPI.DTO;
+﻿using bnbAPI.CustomException;
+using bnbAPI.DTO;
 using bnbAPI.Service;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace bnbAPI.Logic
         private FacilityService facilityService = new FacilityService();
         private PictureService pictureService = new PictureService();
         private AuthService authService = new AuthService();
-        private RentService sercixe = new RentService();
+        private UserTypeRightsService userrightsService = new UserTypeRightsService();
         
         public RoomLogic()
         {
@@ -60,16 +61,22 @@ namespace bnbAPI.Logic
             string userID = authService.GetUserIDByAccessToken(accessToken);
             if(userID != null)
             {
-
-                int roomID = roomService.CreateRoom(userID, roomDTO);
-
-
-                if (roomDTO.Facilities.Count != 0)
+                if (userrightsService.GetIfUserIsHost(userID))
                 {
-                    facilityService.AddFacilitiesToRoom(roomID, roomDTO.Facilities);
-                }
+                    int roomID = roomService.CreateRoom(userID, roomDTO);
 
-                return roomService.GetDetailedRoom(roomID);
+
+                    if (roomDTO.Facilities.Count != 0)
+                    {
+                        facilityService.AddFacilitiesToRoom(roomID, roomDTO.Facilities);
+                    }
+
+                    return roomService.GetDetailedRoom(roomID);
+                }
+                else
+                {
+                    throw new UserNotAuthorizedForActionException();
+                }
 
 
             }

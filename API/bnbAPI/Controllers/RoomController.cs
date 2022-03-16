@@ -1,5 +1,6 @@
 ﻿using bnbAPI.DTO;
 using bnbAPI.Logic;
+using bnbAPI.Service;
 using bnbAPI.Static;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ namespace bnbAPI.Controllers
     public class RoomController : ControllerBase
     {
         private RoomLogic logic = new RoomLogic();
+
         [HttpGet("list")]
         public IActionResult GetSimpleRooms()
         {
@@ -43,7 +45,17 @@ namespace bnbAPI.Controllers
         [HttpPost("create")]
         public IActionResult CreateRoom([FromHeader] string authorization, [FromBody] CreateRoomDTO roomDTO)
         {
-            return StatusCode(200, logic.CreateRoom(AuthorizationHelper.GetAccessTokenFromBearerHeader(authorization),roomDTO));
+            try
+            {
+                return StatusCode(200, logic.CreateRoom(AuthorizationHelper.GetAccessTokenFromBearerHeader(authorization),roomDTO));
+
+            }
+            catch(Exception e)
+            {
+                MessageDTO message = HttpStatusCodeService.GetMessageDTOFromException(e);
+
+                return StatusCode(message.StatusCode, message);
+            }
         }
 
         [HttpPost("order")]

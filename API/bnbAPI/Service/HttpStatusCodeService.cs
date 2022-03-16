@@ -1,4 +1,5 @@
-﻿using bnbAPI.DTO;
+﻿using bnbAPI.CustomException;
+using bnbAPI.DTO;
 using bnbAPI.Enum;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace bnbAPI.Service
                     return 200; //OK response
                 case HttpStatusEnum.ClientFormatError:
                     return 400; //Bad Request
+                case HttpStatusEnum.ForbiddenAction:
+                    return 403;
                 case HttpStatusEnum.PrimaryKeyFailed:
                     return 409; // Conflict response
                 default:
@@ -25,6 +28,27 @@ namespace bnbAPI.Service
                     return 500;
                     
             }
+        }
+
+        public static MessageDTO GetMessageDTOFromException(Exception e)
+        {
+            MessageDTO toReturn;
+
+            switch (e.GetType().Name)
+            {
+                case nameof(UserNotAuthorizedForActionException):
+                    toReturn = new MessageDTO("Missing required rights to perform action",GetHttpStatusIntFromEnum(HttpStatusEnum.ForbiddenAction));
+                    break;
+                case nameof(OutstandingRequestPresentException):
+                    toReturn = new MessageDTO("you already have a request in process cant search", GetHttpStatusIntFromEnum(HttpStatusEnum.PrimaryKeyFailed));
+                    break;
+                default:
+                    toReturn = CreateUnSpecifedError(e);
+                    break;
+                    
+            }
+
+            return toReturn;
         }
 
         /// <summary>
