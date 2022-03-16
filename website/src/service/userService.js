@@ -1,6 +1,6 @@
 import EnvironmentService from "./environmentService";
 
-export default class TestService{
+export default class UserService{
     
     constructor(){
         this.environmentService = new EnvironmentService();
