@@ -3,11 +3,14 @@ import RoomService from '../service/roomService';
 import '../css/room.css';
 import logo from '../logo.svg';
 import missingimage from '../icons/svg/missingimage.svg';
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 
 export default function(props){
     const params = useParams();
-    return <DetailedRoomSite {...props} params={params} />
+    const navigation = useNavigate();
+
+    return <DetailedRoomSite {...props} params={params} history={navigation}/>
+    
 }
 
 class DetailedRoomSite extends Component {
@@ -15,26 +18,65 @@ class DetailedRoomSite extends Component {
     constructor(props) {
         super(props);
         this.roomService = new RoomService();
+        this.handleChange = this.handleChange.bind(this);
 
         this.state = {
             detailedRoom : {},
+            orderStarted : false,
+            startingDate : "",
+            endingDate : ""
         }
     }
 
     async GetDetailedRoom(){
-        console.log(this.props.params.RoomID);
         let result = await this.roomService.RetrieveDetailedRoom(this.props.params.RoomID);
         if(result.status === 401){
         }
         else {
-            console.log(result)
             this.setState({
                 detailedRoom : result
             })
         }
     }
 
-    
+    GetValueFromCookie(cname){
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+    OrderStart(){
+        this.setState({
+            orderStarted : true
+        })
+    }
+
+    handleChange(event){
+        this.setState({
+            [event.target.name] : event.target.value
+        });
+    }
+
+    async OrderRoom(){
+        this.setState({
+            orderStarted : false
+        })
+        let result = await this.roomService.BookRoom(
+            this.state.detailedRoom.roomID,
+            this.state.startingDate, 
+            this.state.endingDate,
+            this.GetValueFromCookie("access_token")
+        );       
+    }
 
     componentDidMount(){
         this.GetDetailedRoom();
@@ -52,21 +94,21 @@ class DetailedRoomSite extends Component {
         if(images.length === 0) {
             images[0] = missingimage;
         }
-
-        console.log(facilities);
         return (
             <div>
-                <div id='RoomDetailed' key={room.roomID}>
+                <div className='RoomDetailed' style={this.state.orderStarted ? {"display":"none"} : {"display":"block"}} key={room.roomID}>
                     <div id="detailedImageBox">
                         <img id='detailedImage' src={images[0]}></img>
                     </div>
                     <div id='detailedpBox'>
                     <p className='detailedroomP'>Address: {room.roomAddress}</p>
                     <p className='detailedroomP'>Owner: {room.roomOwner}</p>
+                    <p className='detailedroomP'>Price: €{room.price}</p>
                     <p className='detailedroomP'>Status: {room.booked ? "Booked": "Available"}</p>
                     </div>
                     <div id='detailedtextBox'>
                         <p className='roomDesc'>{room.roomDesc}</p>
+                        <button className='orderButton' onClick={() => this.OrderStart()}>Til Bestilling</button>
                     </div>
                     
                     <div id='detailedfacilities'>
@@ -80,7 +122,16 @@ class DetailedRoomSite extends Component {
                             <img id='smallImage'src={img}></img>
                         ))}
                     </div>
-                </div>                
+                </div>
+                
+                <div className='orderBox' style={this.state.orderStarted ? {"display":"block"} : {"display":"none"}}>
+                    <h3>Bestil</h3>
+                    <label className='DateLabel'>Start Date:</label>
+                    <input className='DateTime' value={this.state.startingDate} name="startingDate" onChange={this.handleChange} type="date"></input>
+                    <label className='DateLabel'>End Date:</label>
+                    <input className='DateTime' value={this.state.endingDate} name="endingDate" onChange={this.handleChange} type="date"></input>
+                    <button className='sendOrder' onClick={() => this.OrderRoom()}>Bestil</button>
+                </div>              
             </div>
         )
     }
