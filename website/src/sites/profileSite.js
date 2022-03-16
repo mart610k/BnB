@@ -12,9 +12,16 @@ export default class ProfileSite extends Component {
         this.userService = new UserService();
 
         this.authservice = new AuthService();
+
+        this.handleChange = this.handleChange.bind(this);
         
         this.state = {
-            
+            oldPassword : "",
+            newPassword : "",
+            confirmedNewPassword : "",
+            oldEmail : "",
+            newEmail : "",
+            confirmedNewEmail : ""
         }
     }
 
@@ -23,6 +30,44 @@ export default class ProfileSite extends Component {
 
     }
 
+    GetValueFromCookie(cname){
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+    handleChange(event){
+        this.setState({
+            [event.target.name] : event.target.value
+        });
+    }
+
+    async UpdatePassword(){
+            await this.userService.UpdatePassword(
+                this.state.oldPassword,
+                this.state.newPassword,
+                this.state.confirmedNewPassword,
+                this.GetValueFromCookie("access_token")
+            );
+    }
+
+    async UpdateEmail(){
+        await this.userService.UpdateEmail(
+            this.state.oldEmail,
+            this.state.newEmail,
+            this.state.confirmedNewEmail,
+            this.GetValueFromCookie("access_token")
+        );
+    }
 
     render()
     {
@@ -44,33 +89,33 @@ export default class ProfileSite extends Component {
                         <h2 className='profileH2'>Ændre Password</h2>
                         <div className='inputBox'>
                             <label className='profileLabel'>Nuværende Password: </label>
-                            <input className='profileInput' type="password" placeholder='Nuværende Password'></input>
+                            <input className='profileInput' value={this.state.oldPassword} name="oldPassword" onChange={this.handleChange} type="password" placeholder='Nuværende Password'></input>
                         </div>
                         <div className='inputBox'>
                             <label className='profileLabel'>Nyt Password: </label>
-                            <input className='profileInput leftMargin' type="password" placeholder='Nyt Password'></input>
+                            <input className='profileInput leftMargin' value={this.state.newPassword} name="newPassword" onChange={this.handleChange} type="password" placeholder='Nyt Password'></input>
                         </div>
                         <div className='inputBox'>
                             <label className='profileLabel'>Gentag Nyt Password: </label>
-                            <input className='profileInput' type="password" placeholder='Gentag Nyt Password'></input>
+                            <input className='profileInput' onChange={this.handleChange} name="confirmedNewPassword" value={this.state.confirmedNewPassword} type="password" placeholder='Gentag Nyt Password'></input>
                         </div>
-                        <button className='profileButton'>Gem</button>
+                        <button className='profileButton' onClick={() => this.UpdatePassword()}>Gem</button>
                     </div>
                     <div id='Email' className='fullSize'>
                         <h2 className='profileH2'>Ændre Email</h2>
                         <div className='inputBox'>
                             <label className='profileLabel'>Nuværende Email: </label>
-                            <input className='profileInput' type="email" placeholder='Nuværende Email'></input>
+                            <input className='profileInput' onChange={this.handleChange} name="oldEmail" value={this.state.oldEmail} type="email" placeholder='Nuværende Email'></input>
                         </div>
                         <div className='inputBox'>
                             <label className='profileLabel'>Nyt Email: </label>
-                            <input className='profileInput leftMargin' type="email" placeholder='Ny Email'></input>
+                            <input className='profileInput leftMargin' onChange={this.handleChange} name="newEmail" value={this.state.newEmail} type="email" placeholder='Ny Email'></input>
                         </div>
                         <div className='inputBox'>
                             <label className='profileLabel'>Gentag Nyt Email: </label>
-                            <input className='profileInput' type="email" placeholder='Gentag Ny Email'></input>
+                            <input className='profileInput' onChange={this.handleChange} name="confirmedNewEmail" value={this.state.confirmedNewEmail} type="email" placeholder='Gentag Ny Email'></input>
                         </div>
-                        <button className='profileButton'>Gem</button>
+                        <button className='profileButton' onClick={() => this.UpdateEmail()}>Gem</button>
                     </div>
                     <div className='fullSize'>
 
