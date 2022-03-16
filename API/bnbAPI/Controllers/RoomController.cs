@@ -57,5 +57,12 @@ namespace bnbAPI.Controllers
                 return StatusCode(message.StatusCode, message);
             }
         }
+
+        [HttpPost("order")]
+        public IActionResult OrderRoom([FromHeader] string authorization, [FromBody] BookedRoomDTO bookedroomdto)
+        {
+            logic.bookRoom(AuthorizationHelper.GetAccessTokenFromBearerHeader(authorization), bookedroomdto);
+            return StatusCode(200);
+        }
     }
 }

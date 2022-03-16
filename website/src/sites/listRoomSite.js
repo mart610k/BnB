@@ -48,6 +48,7 @@ export default class ListRoomSite extends Component {
                         <div id='pBox'>
                         <p className='roomP'>Address: {rooms.roomAddress}</p>
                         <p className='roomP'>Owner: {rooms.roomOwner}</p>
+                        <p className='roomP'>Price: €{rooms.price}</p>
                         <p className='roomP'>Status: {rooms.booked ? "Booked": "Available"}</p>
                         </div>
                         <div id='textBox'>

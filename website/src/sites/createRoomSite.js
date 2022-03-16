@@ -44,7 +44,7 @@ class CreateRoomSite extends Component {
         }
     }
 
-    GetValueFromCookue(cname){
+    GetValueFromCookie(cname){
         let name = cname + "=";
         let ca = document.cookie.split(';');
         for(let i = 0; i < ca.length; i++) {
@@ -61,8 +61,8 @@ class CreateRoomSite extends Component {
 
     async RegisterRoom(event){
         event.preventDefault();
-        let result = await this.roomService.RegisterRoom(this.state,this.GetValueFromCookue("access_token"));
-        console.log(result);
+        let result = await this.roomService.RegisterRoom(this.state,this.GetValueFromCookie("access_token"));
+        console.log(result.statusCode);
         if(result.statusCode === 401){
 
         }
