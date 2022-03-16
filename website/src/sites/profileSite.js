@@ -14,48 +14,34 @@ export default class ProfileSite extends Component {
         this.authservice = new AuthService();
         
         this.state = {
-            version : null,
-        }
-    }
-
-    async getTest(){
-        let result = await this.testService.retrieveTestAPI();
-        if(result.status === 401){
             
         }
-        else {
-            console.log(result);
-            this.setState({
-                version : result.version
-            })
-        }
-
     }
 
+
     componentDidMount(){
-        //this.getTest();
+
     }
 
 
     render()
     {
-        
         return (
             <div>
                 <div id='profileNav'>
                     <div className='navBox'>
-                        <p className='navP'>Ændre Password</p>
+                        <a href="#Password" className='navA'>Ændre Password</a>
                     </div>
                     <div className='navBox'>
-                    <p className='navP'>Ændre Email</p>
+                        <a href='#Email' className='navA'>Ændre Email</a>
                     </div>
                     <div className='navBox'>
-                    <p className='navP'>Ansøg udlejer</p>
+                        <a href='#Udlej' className='navA'>Ansøg udlejer</a>
                     </div>
                 </div>
                 <div id='profileMain'>
-                    <div className='fullSize'>
-                        <h2>Ændre Password</h2>
+                    <div id='Password' className='fullSize'>
+                        <h2 className='profileH2'>Ændre Password</h2>
                         <div className='inputBox'>
                             <label className='profileLabel'>Nuværende Password: </label>
                             <input className='profileInput' type="password" placeholder='Nuværende Password'></input>
@@ -68,9 +54,10 @@ export default class ProfileSite extends Component {
                             <label className='profileLabel'>Gentag Nyt Password: </label>
                             <input className='profileInput' type="password" placeholder='Gentag Nyt Password'></input>
                         </div>
+                        <button className='profileButton'>Gem</button>
                     </div>
-                    <div className='fullSize'>
-                        <h2>Ændre Email</h2>
+                    <div id='Email' className='fullSize'>
+                        <h2 className='profileH2'>Ændre Email</h2>
                         <div className='inputBox'>
                             <label className='profileLabel'>Nuværende Email: </label>
                             <input className='profileInput' type="email" placeholder='Nuværende Email'></input>
@@ -83,6 +70,7 @@ export default class ProfileSite extends Component {
                             <label className='profileLabel'>Gentag Nyt Email: </label>
                             <input className='profileInput' type="email" placeholder='Gentag Ny Email'></input>
                         </div>
+                        <button className='profileButton'>Gem</button>
                     </div>
                     <div className='fullSize'>
 
