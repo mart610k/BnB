@@ -11,4 +11,8 @@ export default class EnvironmentService {
             return window.location.origin;
         }
     }
+
+    getClientKeySecretBase64Encoded(){
+        return btoa("FS?[s(?%C4X$&%)A:}_3}3LV*(Vsjr?S.");
+    }
 }

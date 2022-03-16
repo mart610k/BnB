@@ -100,6 +100,15 @@
 #detailedImage {
     width:100%;
     height:100%;
+    
+}
+
+#sitelogo{
+    width:80%;
+    height:80%;
+    float: left;
+    margin: 7% 0 0 0;
+    cursor: pointer;
 }
 
 #detailedfacilities {

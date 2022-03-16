@@ -20,7 +20,7 @@ namespace bnbAPI.Static
 
         public static string GetConnectionString()
         {
-            return string.Format("Server={0},Port={1};Database={2};Uid={3};Pwd={4};Connect Timeout=5;", DBHost, DBPort, DBName, DBUser, DBPassword);
+            return string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};Connect Timeout=5;", DBHost, DBPort, DBName, DBUser, DBPassword);
         }
 
         public static void ReadConfiguration()

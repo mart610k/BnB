@@ -39,8 +39,8 @@ class LoginSite extends Component {
         let result = await this.authService.RetrieveAccesstoken({grant_type:"password", username: this.state.usernameInput, password: this.state.passwordInput});
 
         console.log(result);
-        document.cookie = "access_token="+ result.access_token //+ ";refesh_token=" + result.refresh_token + ";expires_in=" + result.expires_in + ";"
-        document.cookie = "refesh_token=" + result.refresh_token;
+        document.cookie = "access_token="+ result.access_token
+        document.cookie = "refresh_token=" + result.refresh_token;
         let date = new Date();
         date.setSeconds(date.getSeconds() + result.expires_in);
         document.cookie = "token_expires=" + date;
