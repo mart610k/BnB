@@ -48,7 +48,7 @@ namespace bnbAPI.Logic
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new CustomException.FailedLoginException();
                 }
 
             }
