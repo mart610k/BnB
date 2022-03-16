@@ -7,6 +7,7 @@ import {
     Link
 }
 from "react-router-dom";
+import { handleChange } from '../helper/reactHelper';
 
 // Wrap and export
 export default function(props) {
@@ -22,7 +23,7 @@ class LoginSite extends Component {
     
         this.authService = new AuthService();
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChange = handleChange.bind(this);
         this.getAccessToken = this.getAccessToken.bind(this);
 
 

@@ -39,24 +39,24 @@ export default class ListRoomSite extends Component {
         return (
             <div id='topbox'>
                 <h2>Rooms</h2>
-                {rooms.map(rooms => (
+                {rooms.map(room => (
                     
-                    <div key={"room_" + rooms.roomID} id='Room' onClick={() => (window.location.href="/room/" + rooms.roomID)} key={rooms.roomID}>
+                    <div key={"room_" + room.roomID} id='Room' onClick={() => (window.location.href="/room/" + room.roomID)}>
                         <div id="imageBox">
-                        <img id='detailedImage' src={rooms.roomPicture[0] == undefined ? missingimage : ""}></img>
+                        <img id='detailedImage' alt="room" src={room.roomPicture[0] === undefined ? missingimage : ""}></img>
                         </div>
                         <div id='pBox'>
-                        <p className='roomP'>Address: {rooms.roomAddress}</p>
-                        <p className='roomP'>Owner: {rooms.roomOwner}</p>
-                        <p className='roomP'>Price: €{rooms.price}</p>
-                        <p className='roomP'>Status: {rooms.booked ? "Booked": "Available"}</p>
+                        <p className='roomP'>Address: {room.roomAddress}</p>
+                        <p className='roomP'>Owner: {room.roomOwner}</p>
+                        <p className='roomP'>Price: €{room.price}</p>
+                        <p className='roomP'>Status: {room.booked ? "Booked": "Available"}</p>
                         </div>
                         <div id='textBox'>
-                            <p className='roomBriefDesc'>{rooms.roomDesc}</p>
+                            <p className='roomBriefDesc'>{room.roomDesc}</p>
                         </div>
                         <div id="Facilities">
                             <p id="simplefacTitle">Facilities</p>
-                            {rooms.facilities.map(facility => (
+                            {room.facilities.map(facility => (
                                 <p key={"facilityID_" + facility.facilityID } className='simplefacilityP'>{facility.facilityName}</p>
                             ))}
                         </div>

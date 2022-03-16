@@ -6,7 +6,7 @@ import logo from '../icons/svg/logo.svg';
 import user from '../icons/svg/user.svg';
 import AuthService from "../service/authService";
 
-
+import { handleChange } from '../helper/reactHelper';
 
 export default function (props) {
     const [show, setShow] = useState(false);
@@ -19,7 +19,7 @@ class HeaderSite extends Component{
             this.userService = new UserService();
             this.authService = new AuthService();
 
-            this.handleChange = this.handleChange.bind(this);
+            this.handleChange = handleChange.bind(this);
 
             this.state = {
                 searchParam : '',
@@ -33,23 +33,15 @@ class HeaderSite extends Component{
             let ca = document.cookie.split(';');
             for(let i = 0; i < ca.length; i++) {
               let c = ca[i];
-              while (c.charAt(0) == ' ') {
+              while (c.charAt(0) === ' ') {
                 c = c.substring(1);
               }
-              if (c.indexOf(name) == 0) {
+              if (c.indexOf(name) === 0) {
                 return c.substring(name.length, c.length);
               }
             }
             return "";
           }
-        
-
-        handleChange(event){
-            this.setState({
-                [event.target.name] : event.target.value
-            });
-        }
-        
 
         async getValidAccessToken (){
 
@@ -71,18 +63,18 @@ class HeaderSite extends Component{
             return (
                 <header className="App-header">
                     <div id='LogoBox'>
-                        <img id='sitelogo' onClick={() => window.location.href="/"} src={logo}></img>
+                        <img id='sitelogo' alt="site logo" onClick={() => window.location.href="/"} src={logo}></img>
                     </div>
                     <div id='SearchBox'>
                         <button id="SearchButton" onClick={() => window.location.href="/search"}>Go To Search</button>
                     </div>
                    
                     <div id="profileBox"onClick={() => window.location.href="/profile"}>
-                        <img id="profileIcon" src={user}></img>
+                        <img id="profileIcon" alt="profile" src={user}></img>
                         <p id="ProfileText">Username</p>
                     </div>
                     <div id='LoginBox' onClick={() => window.location.href="/login"}>
-                        <img id="loginIcon" src={login} ></img>
+                        <img id="loginIcon" alt="Login" src={login} ></img>
                         <p id="LoginText">{ loggedInStatus === true ? "Logout" : "Login"}</p>
                     </div>
                    
