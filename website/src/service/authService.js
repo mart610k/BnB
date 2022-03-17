@@ -18,14 +18,8 @@ export default class AuthService{
             body: "grant_type=" + data.grant_type + "&username=" + data.username + "&password=" + data.password  
         });
 
-        let responseOK = result && result.ok;
-
-        if(responseOK){
-            let data = await result.json();
-            return data;
-        } else {
-            return result;
-        }
+        let json = await result.json();
+        return json;
     }
 
     async updateAccesstokenFromRefreshToken(refresh_token){

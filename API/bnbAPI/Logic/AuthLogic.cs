@@ -1,4 +1,5 @@
-﻿using bnbAPI.DTO;
+﻿using bnbAPI.CustomException;
+using bnbAPI.DTO;
 using bnbAPI.Service;
 using bnbAPI.Static;
 using System;
@@ -23,7 +24,7 @@ namespace bnbAPI.Logic
 
                 if (credentials == null)
                 {
-                    throw new Exception();
+                    throw new FailedLoginException();
                 }
 
                 if (passwordHashService.Verify(accessTokenAuthorizationDTO.Password, credentials.PasswordHashed))
@@ -48,7 +49,7 @@ namespace bnbAPI.Logic
                 }
                 else
                 {
-                    throw new CustomException.FailedLoginException();
+                    throw new FailedLoginException();
                 }
 
             }
