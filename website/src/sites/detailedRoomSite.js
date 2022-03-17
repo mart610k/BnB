@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import RoomService from '../service/roomService';
 import '../css/room.css';
-import logo from '../logo.svg';
 import missingimage from '../icons/svg/missingimage.svg';
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom";
+
+import { handleChange } from '../helper/reactHelper';
 
 export default function(props){
     const params = useParams();
@@ -18,7 +19,7 @@ class DetailedRoomSite extends Component {
     constructor(props) {
         super(props);
         this.roomService = new RoomService();
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChange = handleChange.bind(this);
 
         this.state = {
             detailedRoom : {},
@@ -44,10 +45,10 @@ class DetailedRoomSite extends Component {
         let ca = document.cookie.split(';');
         for(let i = 0; i < ca.length; i++) {
           let c = ca[i];
-          while (c.charAt(0) == ' ') {
+          while (c.charAt(0) === ' ') {
             c = c.substring(1);
           }
-          if (c.indexOf(name) == 0) {
+          if (c.indexOf(name) === 0) {
             return c.substring(name.length, c.length);
           }
         }
@@ -60,17 +61,11 @@ class DetailedRoomSite extends Component {
         })
     }
 
-    handleChange(event){
-        this.setState({
-            [event.target.name] : event.target.value
-        });
-    }
-
     async OrderRoom(){
         this.setState({
             orderStarted : false
         })
-        let result = await this.roomService.BookRoom(
+        await this.roomService.BookRoom(
             this.state.detailedRoom.roomID,
             this.state.startingDate, 
             this.state.endingDate,
@@ -98,7 +93,7 @@ class DetailedRoomSite extends Component {
             <div>
                 <div className='RoomDetailed' style={this.state.orderStarted ? {"display":"none"} : {"display":"block"}} key={room.roomID}>
                     <div id="detailedImageBox">
-                        <img id='detailedImage' src={images[0]}></img>
+                        <img id='detailedImage' src={images[0]} alt="detailed room"></img>
                     </div>
                     <div id='detailedpBox'>
                     <p className='detailedroomP'>Address: {room.roomAddress}</p>
@@ -119,7 +114,7 @@ class DetailedRoomSite extends Component {
                     </div>
                     <div id='smallImageBox'>
                         {images.slice(1).map(img => (
-                            <img id='smallImage'src={img}></img>
+                            <img id='smallImage'src={img} alt="small room"></img>
                         ))}
                     </div>
                 </div>

@@ -17,50 +17,160 @@ namespace bnbAPI.Service
             UserCredentialsDTO userCredentials = null;
             try
             {
-                MySqlConnection conn = new MySqlConnection(Config.GetConnectionString());
-
-                conn.Open();
-
-                MySqlTransaction trans = conn.BeginTransaction();
-
-                try
+                using (MySqlConnection conn = new MySqlConnection(Config.GetConnectionString()))
                 {
-                    MySqlCommand comm = conn.CreateCommand();
-                    comm.Connection = conn;
-                    comm.Transaction = trans;
 
-                    comm.CommandText = "SELECT username,password FROM usercredential WHERE username = @userName;";
-                    comm.Parameters.AddWithValue("@userName", userid);
-                    MySqlDataReader reader = comm.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        userCredentials = new UserCredentialsDTO(reader.GetString("username"), reader.GetString("password"));
-                    }
-                    reader.Close();
-                }
-                catch (Exception e)
-                {
+
+                    conn.Open();
+
+                    MySqlTransaction trans = conn.BeginTransaction();
+
                     try
                     {
-                        if (conn.State == System.Data.ConnectionState.Open)
-                        {
-                            conn.Close();
-                        }
-                        throw e;
-                    }
-                    catch
-                    {
-                        throw e;
-                    }
-                }
+                        MySqlCommand comm = conn.CreateCommand();
+                        comm.Connection = conn;
+                        comm.Transaction = trans;
 
-                conn.Close();
+                        comm.CommandText = "SELECT username,password FROM usercredential WHERE username = @userName;";
+                        comm.Parameters.AddWithValue("@userName", userid);
+                        MySqlDataReader reader = comm.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            userCredentials = new UserCredentialsDTO(reader.GetString("username"), reader.GetString("password"));
+                        }
+                        reader.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        try
+                        {
+                            if (conn.State == System.Data.ConnectionState.Open)
+                            {
+                                conn.Close();
+                            }
+                            throw e;
+                        }
+                        catch
+                        {
+                            throw e;
+                        }
+                    }
+
+                    conn.Close();
+                }
             }
             catch (Exception e)
             {
                 throw e;
             }
-            return userCredentials;
+        return userCredentials;
+        }
+
+        public bool UserHaveOutstandingHostRequest(string userID)
+        {
+            bool toReturn = false;
+
+            UserCredentialsDTO userCredentials = null;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Config.GetConnectionString()))
+                {
+
+
+                    conn.Open();
+
+                    MySqlTransaction trans = conn.BeginTransaction();
+
+                    try
+                    {
+                        MySqlCommand comm = conn.CreateCommand();
+                        comm.Connection = conn;
+                        comm.Transaction = trans;
+
+                        comm.CommandText = "SELECT COUNT(*) FROM userhostrequest WHERE fk_username = @userName AND fk_requeststatus = \"requested\";";
+                        comm.Parameters.AddWithValue("@userName", userID);
+                        MySqlDataReader reader = comm.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            toReturn = reader.GetInt32("COUNT(*)") != 0;
+                        }
+                        reader.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        try
+                        {
+                            if (conn.State == System.Data.ConnectionState.Open)
+                            {
+                                conn.Close();
+                            }
+                            throw e;
+                        }
+                        catch
+                        {
+                            throw e;
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return toReturn;
+        }
+
+
+        public void RequestUserAsHost(string userID, RequestHostDTO requestHostDTO)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Config.GetConnectionString()))
+                {
+
+
+                    conn.Open();
+
+                    MySqlTransaction trans = conn.BeginTransaction();
+
+                    try
+                    {
+                        MySqlCommand comm = conn.CreateCommand();
+                        comm.Connection = conn;
+                        comm.Transaction = trans;
+
+                        comm.CommandText = "INSERT INTO userhostrequest(fk_username,requesttext,fk_requeststatus) VALUE (@userid,@requestText,'requested');";
+                        comm.Parameters.AddWithValue("@userid", userID);
+                        comm.Parameters.AddWithValue("@requestText", requestHostDTO.RequestText);
+                        comm.ExecuteNonQuery();
+
+                            trans.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        try
+                        {
+                            trans.Rollback();
+                            if (conn.State == System.Data.ConnectionState.Open)
+                            {
+                                conn.Close();
+                            }
+                            throw e;
+                        }
+                        catch
+                        {
+                            throw e;
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
 

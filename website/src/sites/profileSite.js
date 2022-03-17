@@ -3,17 +3,17 @@ import AuthService from '../service/authService';
 import UserService from '../service/userService';
 import "../css/profile.css";
 
-
+import { handleChange } from '../helper/reactHelper';
 
 export default class ProfileSite extends Component {
 
     constructor(props){
         super(props);
         this.userService = new UserService();
-
         this.authservice = new AuthService();
 
-        this.handleChange = this.handleChange.bind(this);
+        this.requestAsHost = this.requestAsHost.bind(this);
+        this.handleChange = handleChange.bind(this);
         
         this.state = {
             oldPassword : "",
@@ -21,7 +21,8 @@ export default class ProfileSite extends Component {
             confirmedNewPassword : "",
             oldEmail : "",
             newEmail : "",
-            confirmedNewEmail : ""
+            confirmedNewEmail : "",
+            requestText : ""
         }
     }
 
@@ -45,10 +46,21 @@ export default class ProfileSite extends Component {
         return "";
       }
 
-    handleChange(event){
-        this.setState({
-            [event.target.name] : event.target.value
-        });
+    async requestAsHost(){
+        if(this.state.requestText !== ""){
+            let result = await this.userService.requestAsHost({RequestText : this.state.requestText},this.GetValueFromCookie("access_token"));
+
+            if(result.statusCode === 500){
+                alert()
+            }
+            else if (result.statusCode === 409){
+                alert("You already have a request to become a host outstanding you cant create another");
+            }
+            
+        }
+        else{
+            alert("The input field is empty")
+        }
     }
 
     async UpdatePassword(){
@@ -85,7 +97,8 @@ export default class ProfileSite extends Component {
                     </div>
                 </div>
                 <div id='profileMain'>
-                    <div id='Password' className='fullSize'>
+                    
+                    <div id="Password" className='fullSize'>
                         <h2 className='profileH2'>Ændre Password</h2>
                         <div className='inputBox'>
                             <label className='profileLabel'>Nuværende Password: </label>
@@ -117,8 +130,11 @@ export default class ProfileSite extends Component {
                         </div>
                         <button className='profileButton' onClick={() => this.UpdateEmail()}>Gem</button>
                     </div>
-                    <div className='fullSize'>
-
+                    <div id="Udlej" className='fullSize'>
+                        <label>Request Text:</label><br/>
+                        <textarea value={this.state.requestText} name="requestText" onChange={this.handleChange} type="requestText" placeholder="Reasons why you should become a host" style={{"width": "80%", "height" : "50%"}}>
+                        </textarea><br/>
+                        <button onClick={() => this.requestAsHost()}>Send Request</button>
                     </div>
                 </div>
             </div>

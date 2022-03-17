@@ -3,6 +3,7 @@ using bnbAPI.Logic;
 using bnbAPI.Service;
 using bnbAPI.Static;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace bnbAPI.Controllers
 {
@@ -20,6 +21,24 @@ namespace bnbAPI.Controllers
             return StatusCode(message.StatusCode,message);
         }
 
+
+
+        [HttpPost("request/host")]
+        public IActionResult RequestAsHost([FromHeader] string authorization, [FromBody] RequestHostDTO requestHostDTO)
+        {
+            try
+            {
+                userLogic.RequestUserAsHost(AuthorizationHelper.GetAccessTokenFromBearerHeader(authorization),requestHostDTO);
+
+                return StatusCode(200);
+            }
+            catch(Exception e)
+            {
+                MessageDTO messageDTO = HttpStatusCodeService.GetMessageDTOFromException(e);
+
+                return StatusCode(messageDTO.StatusCode, messageDTO);
+            }
+        }
         [HttpPost("UpdatePass")]
         public IActionResult UpdatePassword([FromBody] UpdatePassDTO updatePass, [FromHeader] string authorization)
         {

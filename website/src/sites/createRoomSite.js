@@ -5,6 +5,8 @@ import FacilityService from '../service/facilityService';
 import '../css/createRoomSite.css';
 import { useNavigate } from "react-router-dom"
 
+import { handleChange } from '../helper/reactHelper';
+
 export default function(props){
     const navigation = useNavigate();
 
@@ -18,7 +20,7 @@ class CreateRoomSite extends Component {
         this.roomService = new RoomService();
         this.facilityService = new FacilityService();
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChange = handleChange.bind(this);
         this.handleFacilityChange= this.handleFacilityChange.bind(this);
         this.RegisterRoom = this.RegisterRoom.bind(this);
 
@@ -49,10 +51,10 @@ class CreateRoomSite extends Component {
         let ca = document.cookie.split(';');
         for(let i = 0; i < ca.length; i++) {
           let c = ca[i];
-          while (c.charAt(0) == ' ') {
+          while (c.charAt(0) === ' ') {
             c = c.substring(1);
           }
-          if (c.indexOf(name) == 0) {
+          if (c.indexOf(name) === 0) {
             return c.substring(name.length, c.length);
           }
         }
@@ -66,6 +68,10 @@ class CreateRoomSite extends Component {
         if(result.statusCode === 401){
 
         }
+        else if (result.statusCode === 403){
+            alert("You do not have rights for this endpoint you will now be redirected the base site");
+            this.props.history("/");
+        }
         else if(result.statusCode === undefined){
             alert("Your room have now been created you will now be redirected to the base site")
             this.props.history("/");
@@ -74,12 +80,6 @@ class CreateRoomSite extends Component {
             alert("unknown issue occured");
             
         }
-    }
-
-    handleChange(event){
-        this.setState({
-            [event.target.name] : event.target.value
-        });
     }
 
     handleFacilityChange(event){

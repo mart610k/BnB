@@ -1,5 +1,5 @@
 import { Component } from "react";
-import React, { useState } from "react";
+import React from "react";
 import RoomService from "../service/roomService";
 import FacilityService from "../service/facilityService";
 import '../css/search.css';
@@ -95,7 +95,6 @@ export default class SearchSite extends Component{
                             ))}
                         </div>
                         <div id="inputBox">
-                            {/* <input id='searchInput' onChange={this.handleChange} name="searchParam" value={this.state.searchParam} type="text" placeholder='Søg'></input> */}
                             <button id='simpleSearch' onClick={() => this.GetsRoomBySearch(checked)}>Søg</button>
                         </div>
                     </div>
@@ -104,7 +103,7 @@ export default class SearchSite extends Component{
                         {rooms.map(rooms => (
                             <div id='searchRoom' onClick={() => (window.location.href="/room/" + rooms.roomID)} key={rooms.roomID}>
                                 <div id="imageBox">
-                                    <img id='detailedImage' src={rooms.roomPicture[0] == undefined ? missingimage : ""}></img>
+                                    <img id='detailedImage' alt="nothing present" src={rooms.roomPicture[0] === undefined ? missingimage : ""}></img>
                                 </div>
                                 <div id='pBox'>
                                 <p className='roomP'>Address: {rooms.roomAddress}</p>

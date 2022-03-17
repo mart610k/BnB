@@ -50,6 +50,11 @@
   height: 10vh;
 }
 
+#TextBox{
+  width: 50%;
+  height: 100%;
+}
+
 #SearchButton{
   align-self: center;
   height: 5vh;
