@@ -1,6 +1,5 @@
 USE bnb;
 
-
 ALTER TABLE `room` ADD `price` INT DEFAULT 0 NOT NULL;
 
 DROP TABLE `statusroom`;

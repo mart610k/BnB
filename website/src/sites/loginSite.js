@@ -39,7 +39,7 @@ class LoginSite extends Component {
 
         let result = await this.authService.RetrieveAccesstoken({grant_type:"password", username: this.state.usernameInput, password: this.state.passwordInput});
 
-        if(result.statusCode === 200){
+        if(result.access_token !== undefined){
             console.log(result);
             document.cookie = "access_token="+ result.access_token
             document.cookie = "refresh_token=" + result.refresh_token;

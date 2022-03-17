@@ -12,7 +12,6 @@ CREATE TABLE `usertypeinformation`(
     PRIMARY KEY (`fk_usertype`,`fk_username`) 
 );
 
-
 CREATE TABLE `requeststatus`(
     `statusname` VARCHAR(32) PRIMARY KEY NOT NULL
 );
