@@ -46,7 +46,7 @@ export default class UserService{
     
     async UpdatePassword(oldpass, newpass, confirmednewpass ,access_token){
         let object;
-        if (newpass == confirmednewpass && oldpass != null) {
+        if (newpass === confirmednewpass && oldpass != null) {
              object = {
                 OldPass : oldpass,
                 NewPass : newpass
@@ -79,7 +79,7 @@ export default class UserService{
 
     async UpdateEmail(oldEmail, newEmail, confirmednewEmail ,access_token){
         let object;
-        if (newEmail == confirmednewEmail && oldEmail != null) {
+        if (newEmail === confirmednewEmail && oldEmail != null) {
              object = {
                 OldEmail : oldEmail,
                 NewEmail : newEmail
