@@ -1,7 +1,7 @@
-use bnb;
+USE bnb;
 
 CREATE TABLE `room` (
-  `roomid` INT PRIMARY KEY AUTO_INCREMENT,
+  `roomid` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `address` VARCHAR(45) NOT NULL,
   `owner` VARCHAR(128) NOT NULL,
   `description` TEXT,
@@ -10,9 +10,8 @@ CREATE TABLE `room` (
 );
 
 CREATE TABLE `status` (
-  `statusid` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`statusid`)
+  `statusid` INT PRIMARY KEY NOT NULL,
+  `name` VARCHAR(45) NOT NULL
 );
 
 CREATE TABLE `statusroom` (
