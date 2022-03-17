@@ -1,4 +1,4 @@
-use bnb;
+USE bnb;
 
 CREATE TABLE `usertype`(`usertype` VARCHAR(40) PRIMARY KEY);
 

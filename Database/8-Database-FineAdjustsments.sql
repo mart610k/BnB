@@ -1,0 +1,6 @@
+USE bnb;
+
+ALTER TABLE `userinformation` MODIFY `email` VARCHAR(128) NOT NULL;
+ALTER TABLE `oauth2` MODIFY `expires` TIMESTAMP NOT NULL;
+ALTER TABLE `usercredential` MODIFY `password` VARCHAR(128) NOT NULL;
+ALTER TABLE `rent` MODIFY `accepted` BOOLEAN NOT NULL;
