@@ -19,7 +19,6 @@ import LogoutSite from "./sites/logoutSite";
 //import { useNavigate } from "react-router-dom";
 
 function App() {
-  document.title = "Bed & Breakfast";
   return (
     <div className="App">
       <HeaderSite />
