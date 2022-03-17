@@ -99,7 +99,7 @@ export default class ProfileSite extends Component {
                 <div id='profileMain'>
                     
                     <div id="Password" className='fullSize'>
-                        <h2>Ændre Password</h2>
+                        <h2 className='profileH2'>Ændre Password</h2>
                         <div className='inputBox'>
                             <label className='profileLabel'>Nuværende Password: </label>
                             <input className='profileInput' value={this.state.oldPassword} name="oldPassword" onChange={this.handleChange} type="password" placeholder='Nuværende Password'></input>
