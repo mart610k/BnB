@@ -42,6 +42,9 @@ namespace bnbAPI.Service
                 case nameof(OutstandingRequestPresentException):
                     toReturn = new MessageDTO("you already have a request in process cant search", GetHttpStatusIntFromEnum(HttpStatusEnum.PrimaryKeyFailed));
                     break;
+                case nameof(FailedLoginException):
+                    toReturn = new MessageDTO("Failed to log in username or password was wrong", GetHttpStatusIntFromEnum(HttpStatusEnum.ForbiddenAction));
+                    break;
                 default:
                     toReturn = CreateUnSpecifedError(e);
                     break;
