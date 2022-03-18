@@ -16,7 +16,7 @@ namespace bnbAPI.Logic
         AuthService authService = new AuthService();
 
 
-        public AccessTokenDTO getAccessToken(AccessTokenAuthorizationDTO accessTokenAuthorizationDTO)
+        public AccessTokenDTO GetAccessToken(AccessTokenAuthorizationDTO accessTokenAuthorizationDTO)
         {
             if (Config.ClientKey == accessTokenAuthorizationDTO.ClientKey && Config.ClientSecret == accessTokenAuthorizationDTO.ClientSecret)
             {
@@ -38,7 +38,7 @@ namespace bnbAPI.Logic
                         }
 
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         authService.RegisterAccessToken(accessTokenAuthorizationDTO.Username);
 
@@ -87,7 +87,7 @@ namespace bnbAPI.Logic
                 authService.DeleteAccessTokenEntryByUserID(accessTokenDTO);
                 return true;
             }
-        catch(Exception e)
+            catch(Exception)
             {
                 return false;
             }

@@ -52,7 +52,7 @@ namespace bnbAPI.Controllers
                     {
                         AccessTokenAuthorizationDTO accessTokenAuthorizationDTO = new AccessTokenAuthorizationDTO(keyValuePairs["username"], keyValuePairs["password"], array[0], array[1]);
 
-                        AccessTokenDTO messageDTO = authLogic.getAccessToken(accessTokenAuthorizationDTO);
+                        AccessTokenDTO messageDTO = authLogic.GetAccessToken(accessTokenAuthorizationDTO);
 
                         return StatusCode(200, messageDTO);
 

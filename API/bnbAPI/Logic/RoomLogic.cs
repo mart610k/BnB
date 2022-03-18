@@ -83,7 +83,7 @@ namespace bnbAPI.Logic
             throw new Exception();   
         }
 
-        public void bookRoom(string accesstoken, BookedRoomDTO bookedroomdto)
+        public void BookRoom(string accesstoken, BookedRoomDTO bookedroomdto)
         {
             string userid = authService.GetUserIDByAccessToken(accesstoken);
             if (userid != null)

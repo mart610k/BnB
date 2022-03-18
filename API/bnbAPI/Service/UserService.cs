@@ -70,7 +70,6 @@ namespace bnbAPI.Service
         {
             bool toReturn = false;
 
-            UserCredentialsDTO userCredentials = null;
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(Config.GetConnectionString()))
