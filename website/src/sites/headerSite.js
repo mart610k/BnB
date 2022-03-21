@@ -73,7 +73,7 @@ class HeaderSite extends Component{
                         <img id="profileIcon" alt="profile" src={user}></img>
                         <p id="ProfileText">Username</p>
                     </div>
-                    <div id='LoginBox' onClick={() => window.location.href="/login"}>
+                    <div id='LoginBox' onClick={ loggedInStatus === true ? () => window.location.href="/logout" : () => window.location.href="/login"}>
                         <img id="loginIcon" alt="Login" src={login} ></img>
                         <p id="LoginText">{ loggedInStatus === true ? "Logout" : "Login"}</p>
                     </div>

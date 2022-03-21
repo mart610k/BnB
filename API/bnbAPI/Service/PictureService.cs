@@ -13,7 +13,11 @@ namespace bnbAPI.Service
         {
 
         }
-
+        /// <summary>
+        /// Gets a list of pictures based on the Room's ID, and returns it in the form of a string list.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<string> GetPictureList(int id)
         {
             List<string> picture = new List<string>();

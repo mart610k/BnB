@@ -48,6 +48,11 @@ namespace bnbAPI.Logic
             return room;
         }
 
+        /// <summary>
+        /// Gets the Data from a room, in a more detailed view. This includes things such as pictures and facilities.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public DetailedRoomDTO GetDetailedRoom(int id)
         {
             DetailedRoomDTO detailedRoom = roomService.GetDetailedRoom(id);

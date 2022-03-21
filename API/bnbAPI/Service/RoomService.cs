@@ -193,6 +193,12 @@ namespace bnbAPI.Service
             }
         }
 
+        /// <summary>
+        /// The Mysql call that gather the data from our database, based around the specified room's ID.
+        /// So that it can return a DetailedRoomDTO object
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public DetailedRoomDTO GetDetailedRoom(int id)
         {
             DetailedRoomDTO detailedRoom = null;

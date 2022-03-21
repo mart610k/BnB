@@ -42,6 +42,11 @@ namespace bnbAPI.Service
             return facilityDTO;
         }
 
+        /// <summary>
+        /// Gets all the facilities, based on the Room's ID. And returns it in the form of a list of facilities.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<FacilityDTO> GetFacilities(int id)
         {
             List<FacilityDTO> facility = new List<FacilityDTO>();
